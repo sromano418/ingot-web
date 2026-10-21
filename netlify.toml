@@ -1,0 +1,9 @@
+[build]
+  command = "python3 build.py"
+  publish = "_site"
+
+# El panel /admin no debe aparecer en Google
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex"

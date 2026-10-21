@@ -1,0 +1,36 @@
+# Panel de contenido de ingot.mx (Decap CMS). Se abre en https://ingot.mx/admin/
+# Cada publicación se guarda como un archivo Markdown en contenido/ del repositorio
+# y Netlify vuelve a generar el sitio solo.
+backend:
+  name: github
+  repo: __REPO__              # usuario/repositorio en GitHub
+  branch: main
+  base_url: https://api.netlify.com   # login con GitHub a través de Netlify
+
+locale: es
+site_url: https://ingot.mx
+display_url: https://ingot.mx
+logo_url: /assets/logo-claro.png
+
+media_folder: assets/uploads
+public_folder: /assets/uploads
+
+collections:
+  - name: contenido
+    label: Contenido
+    label_singular: Publicación
+    description: Artículos y videos que aparecen en ingot.mx/contenido
+    folder: contenido
+    create: true
+    slug: "{{slug}}"
+    summary: "{{titulo}} · {{tipo}} · {{fecha | date('DD/MM/YYYY')}}"
+    sortable_fields: [fecha, titulo]
+    fields:
+      - { label: Título, name: titulo, widget: string }
+      - { label: Fecha, name: fecha, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - { label: Tipo, name: tipo, widget: select, options: [Artículo, Video], default: Artículo }
+      - { label: Resumen, name: resumen, widget: text, hint: "Una o dos frases. Se muestra en la tarjeta y en Google." }
+      - { label: Imagen de portada, name: imagen, widget: image, required: false, hint: "Opcional. En videos de YouTube se usa la miniatura del video si no subes una." }
+      - { label: Link del video, name: video, widget: string, required: false, hint: "Opcional. Pega el link de YouTube (se reproduce en la página) o de otra red (se muestra un botón)." }
+      - { label: Texto, name: body, widget: markdown, required: false }
+      - { label: Borrador (no publicar todavía), name: borrador, widget: boolean, default: false, required: false }

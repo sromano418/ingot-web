@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="es">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5LCGTSPTJM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5LCGTSPTJM');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="__DESCRIPCION__">
+<title>__TITULO__</title>
+__META_EXTRA__
+<link rel="icon" type="image/png" href="__FAVICON__">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#222222;      /* marca: grafito */
+  --cream:#EEEAE2;    /* marca: crema */
+  --copper:#A4471F;   /* marca: cobre */
+  --greige:#B9B2A6;   /* marca: gris cálido */
+  --slate:#2E2D2B; --stone:#E3DED4; --line-d:#4A4743; --line-l:#D3CCBF; --muted:#857E72;
+  color-scheme:dark;
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--cream);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:inherit;text-decoration:none}
+p,h1,h2,h3,h4{margin:0;text-wrap:pretty}
+ul{margin:0;padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--copper);outline-offset:3px}
+.wrap{max-width:1280px;margin:0 auto;padding:112px clamp(20px,5vw,64px);display:flex;flex-direction:column;gap:56px}
+.light{background:var(--cream);color:var(--ink)}
+.stone{background:var(--stone);color:var(--ink)}
+.slate{background:var(--slate)}
+.rule{border-top:1px solid var(--slate)}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--greige)}
+.light .eyebrow,.stone .eyebrow{color:var(--muted)}
+.eyebrow::before{content:"";width:12px;height:12px;background:var(--copper);flex-shrink:0}
+h2{font-family:'Manrope',sans-serif;font-size:clamp(32px,4.2vw,56px);font-weight:700;line-height:1.02;letter-spacing:-.01em}
+.head{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:40px;align-items:end}
+.head > div{display:flex;flex-direction:column;gap:18px}
+.lead{display:flex;flex-direction:column;gap:14px}
+.lead p{font-size:18px;line-height:1.55;color:#D3CCBF}
+.lead p.strong{color:var(--cream)}
+.light .lead p,.stone .lead p{color:var(--line-d)}
+.light .lead p.strong,.stone .lead p.strong{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--copper);color:var(--cream);padding:18px 28px;font-size:17px;font-weight:600;transition:background .2s,color .2s;border:0;font-family:inherit;cursor:pointer}
+.btn:hover{background:var(--cream);color:var(--ink)}
+.light .btn:hover,.stone .btn:hover{background:var(--ink);color:var(--cream)}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:rgba(34,34,34,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--slate)}
+nav .in{max-width:1280px;margin:0 auto;padding:16px clamp(20px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px}
+nav .links{display:flex;align-items:center;gap:28px;font-size:15px;flex-wrap:wrap;justify-content:flex-end}
+nav .links a:not(.cta){color:#D3CCBF}
+nav .links a:not(.cta):hover{color:var(--cream)}
+nav .cta{background:var(--copper);color:var(--cream);padding:10px 18px;font-weight:600;transition:background .2s,color .2s}
+nav .cta:hover{background:var(--cream);color:var(--ink)}
+@media(max-width:640px){nav .links a:not(.cta){display:none}}
+
+/* hero */
+.hero{max-width:1280px;margin:0 auto;padding:clamp(72px,12vh,136px) clamp(20px,5vw,64px) 96px;display:flex;flex-direction:column;gap:40px}
+.hero h1{font-family:'Manrope',sans-serif;font-size:clamp(38px,6.4vw,98px);font-weight:800;line-height:.94;letter-spacing:-.02em}
+.hero h1 span{color:var(--copper)}
+.hero .sub{font-size:clamp(19px,2vw,25px);font-weight:300;line-height:1.4;color:#D3CCBF;max-width:760px}
+.photo{position:relative;background:var(--slate)}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hero .photo{aspect-ratio:21/8;min-height:220px;margin-top:24px}
+.hero .photo .tag{position:absolute;left:0;bottom:-28px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;color:var(--muted)}
+.hero-campo{position:relative;overflow:hidden}
+.hero-campo canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block}
+.hero-texto{position:relative;z-index:1;padding-bottom:64px}
+.hero-foto{padding-top:0}
+.hero-foto .photo{margin-top:0}
+
+/* brecha */
+.gapbar{display:flex;flex-direction:column;gap:14px}
+.gapbar .row{min-height:52px;display:flex}
+.gapbar .cell{display:flex;align-items:center;padding:10px 18px;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+
+/* pilares */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.pillar{background:var(--stone);padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;gap:16px;border-top:3px solid var(--ink);transition:border-color .2s}
+.pillar:hover{border-top-color:var(--copper)}
+.pillar .num{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--copper)}
+.pillar h3{font-family:'Manrope',sans-serif;font-size:clamp(28px,2.8vw,38px);font-weight:800;letter-spacing:-.01em;line-height:1}
+.pillar p{font-size:16px;line-height:1.5;color:var(--line-d)}
+.pillar .tags{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-l);font-size:14px;line-height:1.6;color:var(--ink)}
+
+/* preview */
+.pv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.pv{display:flex;flex-direction:column;gap:14px}
+.pv .card{aspect-ratio:16/10;background:var(--cream);border:1px solid var(--line-l);padding:22px;display:flex;flex-direction:column;justify-content:space-between;gap:12px}
+.pv .card.dark{background:var(--ink);color:var(--cream);border:0}
+.pv .card.slate{background:var(--slate);color:var(--cream);border:0}
+.pv .k{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;color:var(--muted)}
+.pv .card.dark .k,.pv .card.slate .k{color:var(--greige)}
+.pv p{font-size:15px;line-height:1.5;color:var(--line-d)}
+.pv p strong{color:var(--ink)}
+
+/* por qué */
+.why{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:48px;align-items:stretch}
+.why .photo{min-height:340px;background:var(--ink)}
+.why-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:0 32px;align-content:center}
+.why-list div{display:flex;flex-direction:column;gap:10px;padding:24px 0;border-top:1px solid var(--line-d)}
+.why-list strong{font-family:'Manrope',sans-serif;font-size:21px;font-weight:700}
+.why-list span{font-size:15px;line-height:1.55;color:var(--greige)}
+.note{font-size:16px;line-height:1.6;color:#D3CCBF;max-width:860px;padding-top:24px;border-top:1px solid var(--line-d)}
+
+/* proceso */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));border-top:2px solid var(--cream)}
+.steps div{padding:32px 24px 8px 0;display:flex;flex-direction:column;gap:14px}
+.steps .n{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--greige)}
+.steps div:first-child .n{color:var(--copper)}
+.steps strong{font-size:clamp(18px,2vw,26px);font-weight:800;font-family:'Manrope',sans-serif}
+.steps p{font-size:15px;line-height:1.55;color:var(--greige)}
+
+/* caso */
+.case{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));background:var(--stone);border-top:3px solid var(--copper)}
+.case > div{padding:clamp(28px,3.4vw,44px);display:flex;flex-direction:column;gap:14px}
+.case h3{font-family:'Manrope',sans-serif;font-size:clamp(22px,2.4vw,30px);font-weight:800;line-height:1.15}
+.case .k{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.case p{font-size:16px;line-height:1.55;color:var(--line-d)}
+.case .tags{display:flex;flex-wrap:wrap;gap:8px}
+.case .tags span{padding:8px 12px;border:1px solid var(--line-l);background:var(--cream);font-size:14px}
+
+/* sectores */
+.chips,.head > .chips{display:flex;flex-direction:row;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.chips span{padding:10px 16px;border:1px solid var(--line-d);font-size:15px}
+
+/* contacto */
+form{display:flex;flex-direction:column;gap:10px}
+form input{background:transparent;border:0;border-bottom:1px solid var(--ink);padding:14px 0;font:inherit;font-size:17px;color:var(--ink);outline:none;border-radius:0}
+form input:focus{border-bottom-color:var(--copper)}
+form input::placeholder{color:var(--muted)}
+form .btn{margin-top:16px;justify-content:center;background:var(--ink);color:var(--cream)}
+form .btn:hover{background:var(--copper);color:var(--cream)}
+
+/* footer */
+footer{background:var(--ink);border-top:1px solid var(--slate)}
+footer .in{max-width:1280px;margin:0 auto;padding:56px clamp(20px,5vw,64px) 40px;display:flex;flex-direction:column;gap:40px}
+footer .top{display:flex;justify-content:space-between;gap:32px 56px;flex-wrap:wrap;align-items:flex-start}
+footer .brand{display:flex;flex-direction:column;gap:14px;max-width:360px}
+footer .brand p{font-size:15px;line-height:1.5;color:#D3CCBF}
+footer .cols{display:flex;gap:24px 56px;flex-wrap:wrap;font-size:15px}
+footer .cols div{display:flex;flex-direction:column;gap:10px}
+footer .cols a{color:#D3CCBF}
+footer .cols a:hover{color:var(--copper)}
+footer .social{display:flex;flex-direction:row !important;gap:14px !important;margin-top:6px}
+footer .social a{display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line-d);color:#D3CCBF;transition:border-color .2s,color .2s}
+footer .social a:hover{border-color:var(--copper);color:var(--copper)}
+footer .social svg{width:20px;height:20px;display:block}
+footer .bottom{display:flex;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;border-top:1px solid var(--slate);padding-top:24px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+footer .bottom a:hover{color:var(--cream)}
+
+/* contenido (blog y videos) */
+.posts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:24px}
+.post-card{display:flex;flex-direction:column;background:var(--slate);transition:transform .2s}
+.light .post-card{background:var(--stone)}
+.post-card:hover{transform:translateY(-3px)}
+.post-card .img{aspect-ratio:16/9;background:var(--line-d) center/cover no-repeat;position:relative}
+.light .post-card .img{background-color:var(--line-l)}
+.post-card .img.sin{background:var(--ink) url(/assets/simbolo.png) center/64px no-repeat}
+.light .post-card .img.sin{background-color:var(--ink)}
+.post-card .img .play{position:absolute;left:16px;bottom:16px;width:44px;height:44px;border-radius:50%;background:var(--copper);display:flex;align-items:center;justify-content:center}
+.post-card .txt{padding:22px 24px 26px;display:flex;flex-direction:column;gap:10px}
+.post-card .meta{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--greige)}
+.light .post-card .meta{color:var(--muted)}
+.post-card h3{font-family:'Manrope',sans-serif;font-size:21px;font-weight:700;line-height:1.2}
+.post-card p{font-size:15px;line-height:1.5;color:#D3CCBF}
+.light .post-card p{color:var(--line-d)}
+.vacio{padding:40px;border:1px dashed var(--line-d);color:var(--greige);font-size:16px;line-height:1.6}
+.articulo{max-width:760px;margin:0 auto;padding:96px clamp(20px,5vw,64px) 112px;display:flex;flex-direction:column;gap:28px}
+.articulo h1{font-family:'Manrope',sans-serif;font-size:clamp(34px,5vw,60px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
+.articulo .resumen{font-size:clamp(18px,2vw,22px);font-weight:300;line-height:1.45;color:#D3CCBF}
+.articulo .portada{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.articulo .video{position:relative;aspect-ratio:16/9;background:#000}
+.articulo .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.cuerpo{font-size:18px;line-height:1.7;color:#E2DDD3}
+.cuerpo > * + *{margin-top:1.1em}
+.cuerpo h2{font-size:clamp(24px,3vw,32px);margin-top:1.6em}
+.cuerpo h3{font-family:'Manrope',sans-serif;font-size:22px;margin-top:1.4em}
+.cuerpo a{color:var(--cream);text-decoration:underline;text-decoration-color:var(--copper);text-underline-offset:3px}
+.cuerpo ul,.cuerpo ol{padding-left:1.3em;list-style:revert}
+.cuerpo li + li{margin-top:.4em}
+.cuerpo img{max-width:100%;height:auto;display:block}
+.cuerpo blockquote{margin:1.1em 0 0;padding-left:20px;border-left:3px solid var(--copper);color:#D3CCBF}
+.cuerpo table{border-collapse:collapse;width:100%;font-size:16px;display:block;overflow-x:auto}
+.cuerpo th,.cuerpo td{border-bottom:1px solid var(--line-d);padding:8px 10px;text-align:left}
+.volver{font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--greige)}
+.volver:hover{color:var(--cream)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="in">
+    <a href="/"><img src="__LOGO__" alt="InGot Marketing" style="height:52px;width:auto;display:block;"></a>
+    <div class="links">
+      <a href="/#que-hacemos">Qué hacemos</a>
+      <a href="/#como">Cómo trabajamos</a>
+      <a href="/contenido/">Contenido</a>
+      <a href="/#contacto" class="cta">Pide tu Preview</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero-campo">
+  __CAMPO__
+  <header id="top" class="hero hero-texto">
+    <div class="eyebrow">Marketing apoyado por inteligencia artificial para empresas del sector industrial</div>
+    <h1>Hacemos visible<br><span>el valor de tu empresa.</span></h1>
+    <p class="sub">Ayudamos a empresas del sector industrial a mejorar cómo se presentan, cómo las encuentran y cómo comunican su experiencia, capacidades y productos.</p>
+    <div><a href="#contacto" class="btn">Quiero mi Preview sin costo →</a></div>
+  </header>
+</div>
+<div class="hero hero-foto">
+  <div class="photo"><img src="__HERO__" alt=""><span class="tag">MÉXICO · USA · LATAM</span></div>
+</div>
+
+<section class="rule">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Tu empresa tiene valor</div><h2>Tu empresa tiene valor y nosotros ayudamos a que se vea.</h2></div>
+      <div class="lead">
+        <p>Muchas empresas han crecido en capacidad, experiencia, productos y relaciones comerciales, pero su presencia no siempre evoluciona al mismo ritmo.</p>
+        <p class="strong">Lo que una empresa es y lo que sus clientes perciben de ella pueden ser dos cosas muy distintas.</p>
+      </div>
+    </div>
+    <div class="gapbar" aria-label="Lo que eres, lo que ven y aquí trabajamos">
+      <div class="row"><div class="cell" style="flex:1;background:var(--cream);color:var(--ink)">Lo que eres</div></div>
+      <div class="row">
+        <div class="cell" style="width:34%;background:var(--line-d);color:var(--cream)">Lo que ven</div>
+        <div class="cell" style="flex:1;justify-content:center;text-align:center;background:var(--copper);color:var(--cream);letter-spacing:.14em">→ Aquí trabajamos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="que-hacemos" class="light">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Qué hacemos</div><h2>Cuatro pilares para hacer visible el valor de tu empresa.</h2></div>
+    </div>
+    <div class="pillars">
+      <div class="pillar"><span class="num">01 · Presencia</span><h3>Look Right</h3><p>Tu empresa debe proyectar hacia afuera el nivel que tiene hacia adentro.</p><p class="tags">Identidad y marca · Sitios web · Materiales comerciales · LinkedIn · Presentaciones</p></div>
+      <div class="pillar"><span class="num">02 · Visibilidad</span><h3>Be Found</h3><p>Estar presente no es suficiente si tus clientes no pueden encontrarte.</p><p class="tags">SEO · Contenido · Google · Buscadores con IA · Medición</p></div>
+      <div class="pillar"><span class="num">03 · Confianza</span><h3>Be Trusted</h3><p>Convertimos experiencia, conocimiento y datos en contenido que respalda lo que tu empresa sabe hacer.</p><p class="tags">Reportes · Artículos técnicos · Market Intelligence · Newsletters · Contenido ejecutivo</p></div>
+      <div class="pillar"><span class="num">04 · Preferencia</span><h3>Be Chosen</h3><p>Ayudamos a presentar con claridad qué haces, para quién lo haces y qué diferencia a tu empresa.</p><p class="tags">Sales decks · Fichas técnicas · Propuestas comerciales · Prospección · CRM personalizado</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="preview" class="stone">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Preview</div><h2>Primero te mostramos qué vemos.</h2></div>
+      <div class="lead">
+        <p>Antes de proponerte un proyecto, revisamos cómo se presenta hoy tu empresa y buscamos áreas donde exista una oportunidad clara de mejora.</p>
+        <p class="strong">El Preview nos permite conocer tu empresa y mostrarte cómo pensamos antes de trabajar juntos.</p>
+      </div>
+    </div>
+    <div class="pv-grid">
+      <div class="pv">
+        <div class="card">
+          <span class="k">01 · TU EMPRESA</span>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);border-top:2px solid var(--ink);">
+            <div style="padding-top:10px;display:flex;flex-direction:column;"><span style="font-size:30px;font-weight:800;font-family:'Manrope',sans-serif;">800</span><span style="font-size:11px;color:var(--muted);">t/mes</span></div>
+            <div style="padding:10px 0 0 10px;border-left:1px solid var(--line-l);display:flex;flex-direction:column;"><span style="font-size:30px;font-weight:800;font-family:'Manrope',sans-serif;">4</span><span style="font-size:11px;color:var(--muted);">hornos</span></div>
+            <div style="padding:10px 0 0 10px;border-left:1px solid var(--line-l);display:flex;flex-direction:column;"><span style="font-size:30px;font-weight:800;font-family:'Manrope',sans-serif;">6</span><span style="font-size:11px;color:var(--muted);">aleaciones</span></div>
+          </div>
+        </div>
+        <p><strong>01 Tu empresa.</strong> Entendemos qué haces, qué vendes, a quién atiendes y qué capacidades te diferencian.</p>
+      </div>
+      <div class="pv">
+        <div class="card" style="justify-content:flex-start">
+          <span class="k">02 · PRIMERA IMPRESIÓN</span>
+          <div style="flex:1;border:1px solid var(--line-l);display:flex;flex-direction:column;">
+            <div style="display:flex;gap:4px;padding:6px 8px;border-bottom:1px solid var(--line-l);"><span style="width:6px;height:6px;background:var(--line-l);"></span><span style="width:6px;height:6px;background:var(--line-l);"></span><span style="width:6px;height:6px;background:var(--line-l);"></span></div>
+            <div class="mono" style="flex:1;background:var(--stone);display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);">tusitio.com.mx · © 2018</div>
+          </div>
+        </div>
+        <p><strong>02 Primera impresión.</strong> Revisamos lo que un cliente potencial encuentra cuando conoce o busca tu empresa.</p>
+      </div>
+      <div class="pv">
+        <div class="card dark">
+          <span class="k">03 · HALLAZGOS</span>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:10px;align-items:center;border-top:1px solid var(--copper);padding-top:8px;"><span class="mono" style="font-size:10px;background:var(--copper);color:var(--cream);padding:2px 6px;flex-shrink:0;">HECHO</span><span style="font-size:12px;line-height:1.3;">La empresa cuenta con una capacidad que no aparece claramente en su comunicación.</span></div>
+            <div style="display:flex;gap:10px;align-items:center;border-top:1px solid var(--copper);padding-top:8px;"><span class="mono" style="font-size:10px;border:1px solid var(--stone);padding:1px 5px;flex-shrink:0;">OBSERVACIÓN</span><span style="font-size:12px;line-height:1.3;">Esa capacidad podría utilizarse para fortalecer su posicionamiento frente a determinados compradores.</span></div>
+          </div>
+        </div>
+        <p><strong>03 Hallazgos.</strong> Identificamos diferencias entre lo que tu empresa realmente es y lo que actualmente comunica.</p>
+      </div>
+      <div class="pv">
+        <div class="card">
+          <span class="k">04 · REFERENCIAS</span>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;"><span style="font-size:11px;">Tu empresa</span><div style="height:10px;background:var(--stone);"><div style="width:42%;height:100%;background:var(--ink);"></div></div></div>
+            <div style="display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;"><span style="font-size:11px;color:var(--muted);">Referencia A</span><div style="height:10px;background:var(--stone);"><div style="width:68%;height:100%;background:var(--greige);"></div></div></div>
+            <div style="display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:center;"><span style="font-size:11px;color:var(--muted);">Referencia B</span><div style="height:10px;background:var(--stone);"><div style="width:57%;height:100%;background:var(--greige);"></div></div></div>
+          </div>
+        </div>
+        <p><strong>04 Referencias.</strong> Analizamos cómo se presentan otras empresas de tu sector y qué estándares existen dentro y fuera de tu mercado.</p>
+      </div>
+      <div class="pv">
+        <div class="card" style="justify-content:flex-start">
+          <span class="k">05 · PROPUESTA VISUAL</span>
+          <div style="flex:1;border:1px solid var(--line-l);display:grid;grid-template-columns:1.1fr 1fr;box-shadow:0 14px 24px -16px rgba(34,34,34,.4);">
+            <div style="padding:10px;display:flex;flex-direction:column;justify-content:center;gap:6px;"><span style="font-size:13px;font-weight:800;font-family:'Manrope',sans-serif;line-height:1.05;">800 toneladas mensuales de aleación.</span><span style="width:44px;height:12px;background:var(--copper);"></span></div>
+            <div style="background:var(--stone);"></div>
+          </div>
+        </div>
+        <p><strong>05 Propuesta visual.</strong> Te mostramos una primera dirección de cómo podría verse una presencia más alineada con tu empresa actual.</p>
+      </div>
+      <div class="pv">
+        <div class="card slate">
+          <span class="k">06 · PRIORIDADES</span>
+          <div class="mono" style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;align-items:end;font-size:10px;">
+            <div style="height:34px;border-top:2px solid var(--cream);padding-top:6px;">AHORA</div>
+            <div style="height:54px;background:var(--cream);color:var(--ink);padding:6px;">DESPUÉS</div>
+            <div style="height:44px;border-top:2px solid var(--cream);padding-top:6px;">CRECIMIENTO</div>
+          </div>
+        </div>
+        <p><strong>06 Prioridades.</strong> Identificamos qué cambios podrían generar mayor valor y por dónde tendría sentido comenzar.</p>
+      </div>
+    </div>
+    <div><a href="#contacto" class="btn">Quiero mi Preview sin costo →</a></div>
+  </div>
+</section>
+
+<section class="slate">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Por qué InGot</div><h2>Entendemos la industria antes de hablar de marketing.</h2></div>
+      <div class="lead"><p class="strong">Trabajamos desde el contexto de tu negocio. Buscamos entender tus productos, mercados, clientes y procesos antes de definir qué comunicar y cómo hacerlo.</p></div>
+    </div>
+    <div class="why">
+      <div class="photo"><img src="__WHY__" alt=""></div>
+      <div class="why-list">
+        <div><strong>Conocemos tu mercado</strong><span>Tenemos experiencia trabajando con información, productos y mercados relacionados con metales, energía, commodities y otros sectores productivos.</span></div>
+        <div><strong>Contenido de valor</strong><span>Convertimos información técnica, experiencia y datos en materiales que tus clientes puedan entender y utilizar.</span></div>
+        <div><strong>Trabajamos a tu ritmo</strong><span>Antes de proponerte una transformación completa, queremos enseñarte qué vemos y cómo pensamos.</span></div>
+        <div><strong>Control total de datos</strong><span>Los sitios, diseños, materiales, información y activos desarrollados para tu empresa quedan en tus manos.</span></div>
+      </div>
+    </div>
+    <p class="note">Utilizamos datos, herramientas digitales e inteligencia artificial como apoyo para investigar, desarrollar y medir nuestro trabajo, manteniendo el análisis y criterio del equipo en cada proyecto.</p>
+  </div>
+</section>
+
+<section id="como">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Cómo trabajamos</div><h2>Un proceso que comienza entendiendo tu empresa.</h2></div>
+    </div>
+    <div class="steps">
+      <div><span class="n">01 · PREVIEW</span><strong>Conocernos</strong><p>Realizamos una primera revisión de tu presencia para mostrarte qué vemos y cómo pensamos.</p></div>
+      <div><span class="n">02 · AUDITORÍA</span><strong>Definir</strong><p>Analizamos a profundidad tu marca, presencia, competencia y herramientas comerciales para definir prioridades.</p></div>
+      <div><span class="n">03 · TRANSFORMACIÓN</span><strong>Construir</strong><p>Desarrollamos las prioridades acordadas, desde marca y sitio web hasta contenido, materiales y presencia digital.</p></div>
+      <div><span class="n">04 · ACOMPAÑAMIENTO</span><strong>Crecer</strong><p>Damos continuidad al trabajo con contenido, posicionamiento, inteligencia de mercado y medición.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="trabajo" class="light">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Trabajo</div><h2>Así se ve cuando lo aplicamos.</h2></div>
+      <div class="lead"><p>Cada proyecto parte de entender qué hace valiosa a una empresa y encontrar la mejor manera de comunicarlo.</p></div>
+    </div>
+    <article class="case">
+      <div>
+        <span class="k">Caso</span>
+        <h3>Servicios financieros y Market Intelligence para mercados de commodities</h3>
+        <span class="k" style="margin-top:8px">El reto</span>
+        <p>Comunicar una oferta técnica de coberturas financieras e inteligencia de mercados de forma clara y profesional para clientes del sector industrial.</p>
+      </div>
+      <div>
+        <span class="k">Lo que trabajamos</span>
+        <div class="tags"><span>Website</span><span>Posicionamiento</span><span>Market Intelligence</span><span>Reportes</span><span>LinkedIn</span><span>Contenido técnico</span><span>Plataforma digital</span></div>
+        __VER_CASO__
+      </div>
+    </article>
+  </div>
+</section>
+
+__CONTENIDO_INICIO__
+<section class="rule">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Experiencia</div><h2>Experiencia que viene de la industria.</h2></div>
+      <div class="lead">
+        <p class="strong">InGot nace de experiencia trabajando directamente con empresas, productos e información vinculados con mercados de commodities y el sector industrial.</p>
+        <p>Combinamos conocimiento de mercado, comunicación, datos y herramientas digitales para desarrollar una presencia que tenga sentido tanto para la empresa como para sus clientes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rule">
+  <div class="wrap" style="padding-top:96px;padding-bottom:96px">
+    <div class="head" style="align-items:start">
+      <div><div class="eyebrow">Sectores</div><h2 style="font-size:clamp(26px,3vw,38px);line-height:1.08">Marketing para empresas del sector industrial.</h2>
+        <div class="lead"><p>Trabajamos con empresas en distintas etapas de crecimiento, desde negocios familiares que están profesionalizando su presencia hasta compañías establecidas que buscan mejorar cómo se presentan, comunican y llegan a sus clientes.</p></div></div>
+      <div class="chips"><span>Metales</span><span>Acero</span><span>Aluminio</span><span>Cobre</span><span>Energía</span><span>Gas Natural</span><span>Gas LP</span><span>Minería</span><span>Agroindustria</span><span>Química</span><span>Plásticos</span><span>Manufactura</span><span>Commodities</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contacto" class="light">
+  <div class="wrap" style="padding-top:120px">
+    <div class="head">
+      <div style="gap:24px">
+        <h2 style="font-size:clamp(34px,4.6vw,64px);font-weight:800;line-height:1;letter-spacing:-.02em">¿Tu presencia refleja el valor de tu empresa?</h2>
+        <div class="lead">
+          <p class="strong">Compártenos tu empresa y sitio web.</p>
+          <p>Revisaremos tu presencia y, si encontramos una oportunidad clara de mejora, prepararemos un Preview inicial sin costo.</p>
+        </div>
+      </div>
+      <form id="lead" name="preview" method="POST" data-netlify="true" netlify-honeypot="empresa-url">
+        <input type="hidden" name="form-name" value="preview">
+        <p hidden><label>No llenar: <input name="empresa-url"></label></p>
+        <input name="nombre" aria-label="Nombre" required placeholder="Nombre">
+        <input name="empresa" aria-label="Empresa" required placeholder="Empresa">
+        <input name="sitio" aria-label="Sitio web" placeholder="Sitio web">
+        <input name="correo" aria-label="Correo de trabajo" required placeholder="Correo de trabajo" type="email">
+        <button type="submit" class="btn">Quiero mi Preview sin costo</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="in">
+    <div class="top">
+      <div class="brand">
+        <img src="__LOGO__" alt="InGot Marketing" style="height:56px;width:auto;display:block;align-self:flex-start">
+        <p>Marketing para empresas del sector industrial.</p>
+        <p class="mono" style="font-size:12px;letter-spacing:.1em;color:var(--muted)">MÉXICO · USA · LATAM</p>
+      </div>
+      <div class="cols">
+        <div><a href="/#que-hacemos">Qué hacemos</a><a href="/#como">Cómo trabajamos</a><a href="/contenido/">Contenido</a><a href="/#contacto">Pide tu Preview</a></div>
+        <div><a href="mailto:info@ingot.mx">info@ingot.mx</a>__LINKEDIN____AVISO__</div>
+      </div>
+    </div>
+    <div class="bottom"><span>© 2026 InGot Marketing</span><span>Look Right · Be Found · Be Trusted · Be Chosen</span></div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('lead').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var form = this, btn = form.querySelector('button[type=submit]');
+  btn.disabled = true;
+  fetch('/', {method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+              body: new URLSearchParams(new FormData(form)).toString()})
+    .then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      btn.textContent = 'Gracias. Revisaremos la información y nos pondremos en contacto contigo.';
+      if (window.gtag) gtag('event', 'generate_lead', {form_name: 'preview'});
+      form.reset();
+    })
+    .catch(function () {
+      btn.disabled = false;
+      btn.textContent = 'No se pudo enviar. Escríbenos a info@ingot.mx';
+    });
+});
+</script>
+</body>
+</html>
