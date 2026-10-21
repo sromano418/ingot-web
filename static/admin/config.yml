@@ -10,7 +10,7 @@ backend:
 locale: es
 site_url: https://ingot.mx
 display_url: https://ingot.mx
-logo_url: /assets/logo-claro.png
+logo_url: /assets/logo-oscuro.png   # el panel tiene fondo claro
 
 media_folder: assets/uploads
 public_folder: /assets/uploads
