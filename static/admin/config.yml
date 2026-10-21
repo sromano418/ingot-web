@@ -3,7 +3,7 @@
 # y Netlify vuelve a generar el sitio solo.
 backend:
   name: github
-  repo: __REPO__              # usuario/repositorio en GitHub
+  repo: sromano418/ingot-web
   branch: main
   base_url: https://api.netlify.com   # login con GitHub a través de Netlify
 
