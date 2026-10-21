@@ -93,13 +93,15 @@ nav .cta:hover{background:var(--cream);color:var(--ink)}
 
 /* pilares */
 .pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
-.pillar{background:var(--stone);padding:clamp(28px,3vw,40px);display:flex;flex-direction:column;gap:16px;border-top:3px solid var(--ink);transition:border-color .2s}
+.pillar{background:var(--stone);padding:clamp(28px,3vw,40px);display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:16px;align-content:start;border-top:3px solid var(--ink);transition:border-color .2s}
 .pillar:hover{border-top-color:var(--copper)}
 .light .pillar .num{color:var(--copper-dk)}
 .pillar .num{font-family:'Montserrat',sans-serif;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--copper)}
-.pillar h3{font-family:'Montserrat',sans-serif;font-size:clamp(28px,2.8vw,38px);font-weight:800;letter-spacing:-.01em;line-height:1}
+.pillar h3{font-family:'Montserrat',sans-serif;font-size:clamp(22px,1.9vw,28px);font-weight:800;letter-spacing:-.01em;line-height:1.1;white-space:nowrap}
 .pillar p{font-size:16px;line-height:1.5;color:var(--line-d)}
-.pillar .tags{margin-top:auto;padding-top:14px;border-top:1px solid var(--line-l);font-size:14px;line-height:1.6;color:var(--ink)}
+.pillar .servicios{padding-top:16px;border-top:1px solid var(--line-l);display:flex;flex-direction:column;gap:9px;font-size:14px;line-height:1.35;color:var(--ink)}
+.pillar .servicios li{display:flex;align-items:baseline;gap:10px}
+.pillar .servicios li::before{content:"";width:6px;height:6px;background:var(--copper-dk);flex-shrink:0;transform:translateY(-2px)}
 
 /* preview */
 .pv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
@@ -265,10 +267,10 @@ footer .bottom a:hover{color:var(--cream)}
       <div><div class="eyebrow">Qué hacemos</div><h2>Cuatro pilares para hacer visible el valor de tu empresa.</h2></div>
     </div>
     <div class="pillars">
-      <div class="pillar"><span class="num">01 · Presencia</span><h3>Look Right</h3><p>Tu empresa debe proyectar hacia afuera el nivel que tiene hacia adentro.</p><p class="tags">Identidad y marca · Sitios web · Materiales comerciales · LinkedIn · Presentaciones</p></div>
-      <div class="pillar"><span class="num">02 · Visibilidad</span><h3>Be Found</h3><p>Estar presente no es suficiente si tus clientes no pueden encontrarte.</p><p class="tags">SEO · Contenido · Google · Buscadores con IA · Medición</p></div>
-      <div class="pillar"><span class="num">03 · Confianza</span><h3>Be Trusted</h3><p>Convertimos experiencia, conocimiento y datos en contenido que respalda lo que tu empresa sabe hacer.</p><p class="tags">Reportes · Artículos técnicos · Market Intelligence · Newsletters · Contenido ejecutivo</p></div>
-      <div class="pillar"><span class="num">04 · Preferencia</span><h3>Be Chosen</h3><p>Ayudamos a presentar con claridad qué haces, para quién lo haces y qué diferencia a tu empresa.</p><p class="tags">Sales decks · Fichas técnicas · Propuestas comerciales · Prospección · CRM personalizado</p></div>
+      <div class="pillar"><span class="num">01 · Presencia</span><h3>Look Right</h3><p>Tu empresa debe proyectar hacia afuera el nivel que tiene hacia adentro.</p><ul class="servicios"><li>Identidad y marca</li><li>Sitios web</li><li>Materiales comerciales</li><li>LinkedIn</li><li>Presentaciones</li></ul></div>
+      <div class="pillar"><span class="num">02 · Visibilidad</span><h3>Be Found</h3><p>Estar presente no es suficiente si tus clientes no pueden encontrarte.</p><ul class="servicios"><li>SEO</li><li>Contenido</li><li>Google</li><li>Buscadores con IA</li><li>Medición</li></ul></div>
+      <div class="pillar"><span class="num">03 · Confianza</span><h3>Be Trusted</h3><p>Convertimos experiencia y datos en contenido que respalda lo que tu empresa sabe hacer.</p><ul class="servicios"><li>Reportes</li><li>Artículos técnicos</li><li>Market Intelligence</li><li>Newsletters</li><li>Contenido ejecutivo</li></ul></div>
+      <div class="pillar"><span class="num">04 · Preferencia</span><h3>Be Chosen</h3><p>Presentamos con claridad qué haces, para quién lo haces y qué te diferencia.</p><ul class="servicios"><li>Sales decks</li><li>Fichas técnicas</li><li>Propuestas comerciales</li><li>Prospección</li><li>CRM personalizado</li></ul></div>
     </div>
   </div>
 </section>
