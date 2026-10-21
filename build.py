@@ -111,7 +111,7 @@ def tarjeta(p):
 
 def plantilla():
     t = (RAIZ / "plantilla" / "inicio.html").read_text(encoding="utf-8")
-    t = (t.replace("__FAVICON__", "/assets/favicon.png").replace("__LOGO__", "/assets/logo-claro.png")
+    t = (t.replace("__FAVICON__", "/assets/favicon.png").replace("__LOGO__", "/assets/logo-oscuro.png")
           .replace("__HERO__", "/assets/portada.webp").replace("__WHY__", "/assets/industria.webp")
           .replace("__VER_CASO__", f'<div style="margin-top:auto;padding-top:8px"><a href="{VER_CASO_URL}" class="btn">Ver caso →</a></div>' if VER_CASO_URL else "")
           .replace("__LINKEDIN__", SOCIAL_HTML)

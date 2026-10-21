@@ -100,8 +100,8 @@ void main(){
 }`
 
   const hex = h => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255]
-  // Paleta InGot sobre grafito: cobre aclarado (el #A4471F casi no se ve sobre #222222) → gris cálido → crema
-  const COLORES = ['#C46A40', '#B9B2A6', '#EEEAE2'].map(hex)
+  // Paleta InGot sobre crema: gris cálido dominante → gris oscuro → cobre solo de acento
+  const COLORES = ['#B9B2A6', '#857E72', '#A4471F'].map(hex)
 
   // Reparto aleatorio pero parejo (Poisson aproximado)
   function repartir(W, H, sep) {
@@ -198,7 +198,7 @@ void main(){
     gl.uniform1f(U.w2, Uu * 0.25)
     gl.uniform1f(U.tam, Math.min(1.6, Math.max(1, W / 1200)))
     gl.uniform1f(U.dpr, dpr)
-    gl.uniform1f(U.dark, 1)                  // ingot.mx siempre es oscura
+    gl.uniform1f(U.dark, 0)                  // ingot.mx es clara: las partículas pequeñas se oscurecen
     gl.uniform2f(U.ring, anillo.x, anillo.y)
     gl.uniform3fv(U.c1, COLORES[0]); gl.uniform3fv(U.c2, COLORES[1]); gl.uniform3fv(U.c3, COLORES[2])
     gl.drawArrays(gl.POINTS, 0, n)
