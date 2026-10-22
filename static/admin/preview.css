@@ -35,3 +35,6 @@ body { margin: 0; background: #EEEAE2; color: #222222; font-family: 'Montserrat'
 .cuerpo ul, .cuerpo ol { padding-left: 1.3em; }
 .cuerpo blockquote { margin: 1em 0; padding-left: 18px; border-left: 3px solid #A4471F; color: #4A4743; }
 .cuerpo img { max-width: 100%; height: auto; }
+.cuerpo table { border-collapse: collapse; width: 100%; font-size: 15px; margin: 0 0 1em; }
+.cuerpo th, .cuerpo td { border-bottom: 1px solid #D3CCBF; padding: 8px 10px; text-align: left; vertical-align: top; }
+.cuerpo th { border-bottom-color: #222222; font-weight: 600; }
