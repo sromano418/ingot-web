@@ -11,6 +11,7 @@ Netlify lo corre en cada cambio (ver netlify.toml). En local:
 """
 import datetime as dt
 import html
+import json
 import re
 import shutil
 import sys
@@ -80,17 +81,26 @@ def leer_publicaciones():
         fecha = a_fecha(meta.get("fecha"))
         vid = youtube_id(meta.get("video"))
         imagen = meta.get("imagen") or (f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg" if vid else "")
+        seo = meta.get("seo") or {}
+        slug = re.sub(r"[^a-z0-9-]+", "-", str(meta.get("slug") or f.stem).lower()).strip("-") or f.stem
+        titulo = str(meta.get("titulo") or f.stem)
+        resumen = str(meta.get("resumen") or "")
         pubs.append({
-            "slug": f.stem,
-            "titulo": str(meta.get("titulo") or f.stem),
-            "resumen": str(meta.get("resumen") or ""),
+            "slug": slug,
+            "titulo": titulo,
+            "resumen": resumen,
+            "meta_title": str(seo.get("meta_title") or "").strip() or f"{titulo} · InGot",
+            "meta_description": str(seo.get("meta_description") or "").strip() or resumen or DESCRIPCION,
+            "keyword": str(seo.get("keyword") or "").strip(),
+            "imagen_alt": str(meta.get("imagen_alt") or ""),
             "tipo": meta.get("tipo") or ("Video" if meta.get("video") else "Artículo"),
             "fecha": fecha,
             "fecha_txt": f"{fecha.day} {MESES[fecha.month - 1]} {fecha.year}",
             "imagen": imagen,
             "video": meta.get("video") or "",
             "video_id": vid,
-            "html": markdown.markdown(cuerpo, extensions=["extra", "sane_lists"]),
+            # nl2br: respeta los saltos de línea de texto pegado sin líneas en blanco
+            "html": markdown.markdown(cuerpo, extensions=["extra", "sane_lists", "nl2br"]),
         })
     pubs.sort(key=lambda p: p["fecha"], reverse=True)
     return pubs
@@ -119,24 +129,25 @@ def plantilla():
     return t
 
 
-def meta(titulo, descripcion, ruta, imagen=""):
+def meta(titulo, descripcion, ruta, imagen="", tipo="website", extra=""):
     img = imagen if imagen.startswith("http") else DOMINIO + (imagen or "/assets/portada.webp")
     return (f'<link rel="canonical" href="{DOMINIO}{ruta}">\n'
-            f'<meta property="og:type" content="website">\n'
+            f'<meta property="og:type" content="{tipo}">\n'
             f'<meta property="og:title" content="{esc(titulo)}">\n'
             f'<meta property="og:description" content="{esc(descripcion)}">\n'
             f'<meta property="og:url" content="{DOMINIO}{ruta}">\n'
-            f'<meta property="og:image" content="{esc(img)}">')
+            f'<meta property="og:image" content="{esc(img)}">\n'
+            f'<meta name="twitter:card" content="summary_large_image">' + extra)
 
 
-def cabeza(t, titulo, descripcion, ruta, imagen=""):
+def cabeza(t, titulo, descripcion, ruta, imagen="", tipo="website", extra=""):
     return (t.replace("__TITULO__", esc(titulo)).replace("__DESCRIPCION__", esc(descripcion))
-             .replace("__META_EXTRA__", meta(titulo, descripcion, ruta, imagen)))
+             .replace("__META_EXTRA__", meta(titulo, descripcion, ruta, imagen, tipo, extra)))
 
 
-def subpagina(t, titulo, descripcion, ruta, cuerpo, imagen=""):
+def subpagina(t, titulo, descripcion, ruta, cuerpo, imagen="", tipo="website", extra=""):
     """Encabezado y pie de la portada alrededor de un contenido propio."""
-    t = cabeza(t, titulo, descripcion, ruta, imagen)
+    t = cabeza(t, titulo, descripcion, ruta, imagen, tipo, extra)
     inicio = t[:t.index('<div class="hero-campo">')]
     pie = t[t.index("<footer>"):t.index("</footer>") + len("</footer>")]
     return inicio + "<main>\n" + cuerpo + "\n</main>\n\n" + pie + "\n</body>\n</html>\n"
@@ -179,7 +190,7 @@ def pagina_publicacion(t, p):
     elif p["video"]:
         medio = f'<p><a class="btn" href="{esc(p["video"])}" target="_blank" rel="noopener">Ver el video →</a></p>'
     elif p["imagen"]:
-        medio = f'<img class="portada" src="{esc(p["imagen"])}" alt="">'
+        medio = f'<img class="portada" src="{esc(p["imagen"])}" alt="{esc(p["imagen_alt"])}">'
     else:
         medio = ""
     cuerpo = ('<article class="articulo">\n'
@@ -190,7 +201,20 @@ def pagina_publicacion(t, p):
               + f'  {medio}\n  <div class="cuerpo">{p["html"]}</div>\n'
               '  <div style="padding-top:24px;border-top:1px solid var(--slate)"><a href="/#contacto" class="btn">Quiero mi Preview sin costo →</a></div>\n'
               '</article>')
-    return subpagina(t, f'{p["titulo"]} · InGot', p["resumen"] or DESCRIPCION, f'/contenido/{p["slug"]}/', cuerpo, p["imagen"])
+    ruta = f'/contenido/{p["slug"]}/'
+    img = p["imagen"] if p["imagen"].startswith("http") else DOMINIO + (p["imagen"] or "/assets/portada.webp")
+    # Datos estructurados de artículo para Google (lo que hace Yoast en WordPress)
+    ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["titulo"],
+          "description": p["meta_description"], "image": img, "datePublished": p["fecha"].date().isoformat(),
+          "mainEntityOfPage": DOMINIO + ruta, "inLanguage": "es-MX",
+          "author": {"@type": "Organization", "name": "InGot Marketing", "url": DOMINIO},
+          "publisher": {"@type": "Organization", "name": "InGot Marketing",
+                        "logo": {"@type": "ImageObject", "url": DOMINIO + "/assets/logo-oscuro.png"}}}
+    if p["keyword"]:
+        ld["keywords"] = p["keyword"]
+    extra = (f'\n<meta property="article:published_time" content="{p["fecha"].date().isoformat()}">'
+             f'\n<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False).replace("</", "<" + chr(92) + "/")}</script>')
+    return subpagina(t, p["meta_title"], p["meta_description"], ruta, cuerpo, p["imagen"], "article", extra)
 
 
 def main():

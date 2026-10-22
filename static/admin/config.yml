@@ -22,15 +22,38 @@ collections:
     description: Artículos y videos que aparecen en ingot.mx/contenido
     folder: contenido
     create: true
-    slug: "{{slug}}"
+    slug: "{{fields.slug}}"
+    identifier_field: titulo
     summary: "{{titulo}} · {{tipo}} · {{fecha | date('DD/MM/YYYY')}}"
     sortable_fields: [fecha, titulo]
     fields:
-      - { label: Título, name: titulo, widget: string }
+      - { label: "Título (H1)", name: titulo, widget: string, hint: "El título principal del artículo. Es el H1 de la página." }
+      - label: "URL (slug)"
+        name: slug
+        widget: string
+        hint: "La dirección del artículo: ingot.mx/contenido/<slug>. Solo minúsculas, números y guiones; incluye la keyword principal. Ej.: marketing-b2b-industrial"
+        pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', "Solo minúsculas sin acentos, números y guiones (ej.: marketing-b2b-industrial)"]
       - { label: Fecha, name: fecha, widget: datetime, format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
       - { label: Tipo, name: tipo, widget: select, options: [Artículo, Video], default: Artículo }
-      - { label: Resumen, name: resumen, widget: text, hint: "Una o dos frases. Se muestra en la tarjeta y en Google." }
-      - { label: Imagen de portada, name: imagen, widget: image, required: false, hint: "Opcional. En videos de YouTube se usa la miniatura del video si no subes una." }
+      - { label: "Extracto", name: resumen, widget: text, hint: "Una o dos frases que aparecen en la tarjeta del artículo y debajo del título." }
+      - { label: Imagen de portada, name: imagen, widget: image, required: false, hint: "Recomendado 1600 × 900 px (16:9). En videos de YouTube se usa la miniatura del video si no subes una." }
+      - { label: "Texto alternativo de la portada", name: imagen_alt, widget: string, required: false, hint: "Describe la imagen en una frase (ayuda al SEO y a la accesibilidad)." }
       - { label: Link del video, name: video, widget: string, required: false, hint: "Opcional. Pega el link de YouTube (se reproduce en la página) o de otra red (se muestra un botón)." }
-      - { label: Texto, name: body, widget: markdown, required: false }
+      - label: Contenido
+        name: body
+        widget: markdown
+        required: false
+        modes: [rich_text, raw]
+        buttons: [heading-two, heading-three, heading-four, bold, italic, link, bulleted-list, numbered-list, quote]
+        editor_components: [image]
+        hint: "Usa H2 para las secciones principales, H3 y H4 para subsecciones. El H1 es el título de arriba."
+      - label: SEO
+        name: seo
+        widget: object
+        collapsed: false
+        required: false
+        fields:
+          - { label: "Keyword principal", name: keyword, widget: string, required: false, hint: "La búsqueda por la que quieres aparecer en Google. Ej.: marketing industrial B2B" }
+          - { label: "Meta title", name: meta_title, widget: string, required: false, hint: "El título que aparece en Google. Ideal entre 50 y 60 caracteres. Si lo dejas vacío se usa el título." }
+          - { label: "Meta description", name: meta_description, widget: text, required: false, hint: "El texto bajo el título en Google. Ideal entre 120 y 160 caracteres. Si lo dejas vacío se usa el extracto." }
       - { label: Borrador (no publicar todavía), name: borrador, widget: boolean, default: false, required: false }
