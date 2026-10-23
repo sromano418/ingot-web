@@ -56,7 +56,7 @@ h2{font-family:'Montserrat',sans-serif;font-size:clamp(32px,4.2vw,56px);font-wei
 .lead p.strong{color:var(--cream)}
 .light .lead p,.stone .lead p{color:var(--line-d)}
 .light .lead p.strong,.stone .lead p.strong{color:var(--ink)}
-.btn{display:inline-flex;align-items:center;gap:10px;background:var(--copper);color:var(--on-copper);padding:18px 28px;font-size:17px;font-weight:600;transition:background .2s,color .2s;border:0;font-family:inherit;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;background:var(--copper);color:var(--on-copper);padding:18px 28px;font-size:17px;font-weight:600;transition:background .2s,color .2s;border:0;font-family:inherit;cursor:pointer}
 .btn:hover{background:var(--cream);color:var(--ink)}
 .light .btn:hover,.stone .btn:hover{background:var(--ink);color:var(--cream)}
 .mono{font-family:'Montserrat',sans-serif}
@@ -67,7 +67,7 @@ nav .in{max-width:1280px;margin:0 auto;padding:16px clamp(20px,5vw,64px);display
 nav .links{display:flex;align-items:center;gap:28px;font-size:15px;flex-wrap:wrap;justify-content:flex-end}
 nav .links a:not(.cta){color:var(--sec)}
 nav .links a:not(.cta):hover{color:var(--cream)}
-nav .cta{background:var(--copper);color:var(--on-copper);padding:10px 18px;white-space:nowrap;font-weight:600;transition:background .2s,color .2s}
+nav .cta{border-radius:999px;background:var(--copper);color:var(--on-copper);padding:10px 18px;white-space:nowrap;font-weight:600;transition:background .2s,color .2s}
 nav .cta:hover{background:var(--cream);color:var(--ink)}
 @media(max-width:640px){nav .links a:not(.cta){display:none}nav .cta{padding:9px 14px;font-size:14px}}
 
@@ -171,7 +171,7 @@ footer .cols div{display:flex;flex-direction:column;gap:10px}
 footer .cols a{color:var(--sec)}
 footer .cols a:hover{color:var(--copper)}
 footer .social{display:flex;flex-direction:row !important;gap:14px !important;margin-top:6px}
-footer .social a{display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line-d);color:var(--sec);transition:border-color .2s,color .2s}
+footer .social a{border-radius:50%;display:inline-flex;width:40px;height:40px;align-items:center;justify-content:center;border:1px solid var(--line-d);color:var(--sec);transition:border-color .2s,color .2s}
 footer .social a:hover{border-color:var(--copper);color:var(--copper)}
 footer .social svg{width:20px;height:20px;display:block}
 footer .bottom{display:flex;justify-content:space-between;gap:12px 32px;flex-wrap:wrap;border-top:1px solid var(--slate);padding-top:24px;font-family:'Montserrat',sans-serif;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
@@ -194,14 +194,29 @@ footer .bottom a:hover{color:var(--cream)}
 .post-card p{font-size:15px;line-height:1.5;color:var(--sec)}
 .light .post-card p{color:var(--line-d)}
 .vacio{padding:40px;border:1px dashed var(--line-d);color:var(--greige);font-size:16px;line-height:1.6}
-.articulo{max-width:760px;margin:0 auto;padding:96px clamp(20px,5vw,64px) 112px;display:flex;flex-direction:column;gap:28px}
-.articulo h1{font-family:'Montserrat',sans-serif;font-size:clamp(34px,5vw,60px);font-weight:800;line-height:1.02;letter-spacing:-.02em}
-.articulo .resumen{font-size:clamp(18px,2vw,22px);font-weight:300;line-height:1.45;color:var(--sec)}
-.articulo .portada{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.articulo{max-width:1280px;margin:0 auto;padding:72px clamp(20px,5vw,64px) 112px;display:flex;flex-direction:column;gap:32px}
+.articulo .art-head{display:flex;flex-direction:column;gap:22px;max-width:1040px}
+.articulo h1{font-family:'Montserrat',sans-serif;font-size:clamp(34px,4.6vw,64px);font-weight:800;line-height:1.04;letter-spacing:-.02em}
+.articulo .resumen{font-size:clamp(18px,1.7vw,22px);font-weight:400;line-height:1.5;color:var(--sec);max-width:820px}
+.articulo .portada{width:100%;aspect-ratio:2/1;object-fit:cover;display:block}
 .articulo .video{position:relative;aspect-ratio:16/9;background:#000}
 .articulo .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.art-grid{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:clamp(40px,6vw,96px);align-items:start;padding-top:16px}
+.art-grid .cuerpo{max-width:780px}
+.art-aside{position:sticky;top:110px;display:flex;flex-direction:column;gap:20px}
+.indice{border-top:2px solid var(--cream);padding-top:16px;display:flex;flex-direction:column;gap:10px;max-height:calc(100vh - 400px);overflow-y:auto;overscroll-behavior:contain}
+.indice span{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.indice a{font-size:15px;line-height:1.35;color:var(--sec);padding-left:12px;border-left:2px solid var(--line-d)}
+.indice a:hover{color:var(--cream);border-left-color:var(--copper)}
+.art-cta{background:var(--copper);color:#EEEAE2;padding:24px;display:flex;flex-direction:column;gap:14px}
+.art-cta strong{font-size:20px;line-height:1.2}
+.art-cta p{font-size:15px;line-height:1.5;color:#EEEAE2}
+.art-cta .btn{background:#222222;color:#EEEAE2;justify-content:center}
+.art-cta .btn:hover{background:#EEEAE2;color:#222222}
+@media(max-width:960px){.art-grid{grid-template-columns:1fr}.art-aside{position:static}.indice{display:none}}
 .cuerpo{font-size:18px;line-height:1.7;color:#2E2D2B}
 .cuerpo > * + *{margin-top:1.1em}
+.cuerpo h2,.cuerpo h3{scroll-margin-top:110px}
 .cuerpo h2{font-size:clamp(24px,3vw,32px);margin-top:1.6em}
 .cuerpo h3{font-family:'Montserrat',sans-serif;font-size:22px;margin-top:1.4em}
 .cuerpo h4{font-family:'Montserrat',sans-serif;font-size:19px;font-weight:700;margin-top:1.3em}
@@ -224,7 +239,7 @@ footer .bottom a:hover{color:var(--cream)}
     <div class="links">
       <a href="/#que-hacemos">Qué hacemos</a>
       <a href="/#como">Cómo trabajamos</a>
-      <a href="/contenido/">Contenido</a>
+      <a href="/blog/">Blog</a>
       <a href="/#contacto" class="cta">Pide tu Preview</a>
     </div>
   </div>
@@ -464,7 +479,7 @@ __CONTENIDO_INICIO__
         <p class="mono" style="font-size:12px;letter-spacing:.1em;color:var(--muted)">MÉXICO · USA · LATAM</p>
       </div>
       <div class="cols">
-        <div><a href="/#que-hacemos">Qué hacemos</a><a href="/#como">Cómo trabajamos</a><a href="/contenido/">Contenido</a><a href="/#contacto">Pide tu Preview</a></div>
+        <div><a href="/#que-hacemos">Qué hacemos</a><a href="/#como">Cómo trabajamos</a><a href="/blog/">Blog</a><a href="/#contacto">Pide tu Preview</a></div>
         <div><a href="mailto:info@ingot.mx">info@ingot.mx</a>__LINKEDIN____AVISO__</div>
       </div>
     </div>

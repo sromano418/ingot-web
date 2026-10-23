@@ -7,3 +7,9 @@
   for = "/admin/*"
   [headers.values]
     X-Robots-Tag = "noindex"
+
+# El blog se llamaba "contenido": las direcciones viejas llevan a /blog
+[[redirects]]
+  from = "/contenido/*"
+  to = "/blog/:splat"
+  status = 301

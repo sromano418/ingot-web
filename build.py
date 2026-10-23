@@ -26,7 +26,7 @@ DOMINIO = "https://ingot.mx"
 DESCRIPCION = "Marketing apoyado por inteligencia artificial para empresas del sector industrial. Hacemos visible el valor de tu empresa."
 
 # Enlaces que dependen de datos que aún no tenemos: se muestran solo si se llenan.
-VER_CASO_URL = ""     # p. ej. /contenido/caso-servicios-financieros/
+VER_CASO_URL = ""     # p. ej. /blog/caso-servicios-financieros/
 AVISO_URL = ""        # p. ej. /aviso-de-privacidad/
 
 SOCIAL = [
@@ -74,6 +74,7 @@ def leer_publicaciones():
     pubs = []
     for f in sorted((RAIZ / "contenido").glob("*.md")):
         txt = f.read_text(encoding="utf-8")
+        md = markdown.Markdown(extensions=["extra", "sane_lists", "nl2br", "toc"], extension_configs={"toc": {"toc_depth": "2-4"}})
         m = re.match(r"^---\s*\n(.*?)\n---\s*\n?(.*)$", txt, re.S)
         meta, cuerpo = (yaml.safe_load(m.group(1)) or {}, m.group(2)) if m else ({}, txt)
         if meta.get("borrador"):
@@ -100,7 +101,8 @@ def leer_publicaciones():
             "video": meta.get("video") or "",
             "video_id": vid,
             # nl2br: respeta los saltos de línea de texto pegado sin líneas en blanco
-            "html": markdown.markdown(cuerpo, extensions=["extra", "sane_lists", "nl2br"]),
+            "html": md.convert(cuerpo),
+            "indice": [(t["id"], t["name"]) for t in md.toc_tokens if t["level"] == 2],
         })
     pubs.sort(key=lambda p: p["fecha"], reverse=True)
     return pubs
@@ -110,7 +112,7 @@ def tarjeta(p):
     fondo = f' style="background-image:url(\'{esc(p["imagen"])}\')"' if p["imagen"] else ""
     clase = "img" if p["imagen"] else "img sin"     # sin imagen: símbolo de InGot de relleno
     play = PLAY if p["tipo"] == "Video" else ""
-    return (f'<a class="post-card" href="/contenido/{p["slug"]}/">'
+    return (f'<a class="post-card" href="/blog/{p["slug"]}/">'
             f'<div class="{clase}"{fondo}>{play}</div>'
             f'<div class="txt"><span class="meta">{esc(p["tipo"])} · {p["fecha_txt"]}</span>'
             f'<h3>{esc(p["titulo"])}</h3>'
@@ -157,8 +159,8 @@ def portada(t, pubs, particulas):
     if pubs:
         bloque = (
             '<section class="light">\n  <div class="wrap">\n    <div class="head">\n'
-            '      <div><div class="eyebrow">Contenido</div><h2>Lo último que publicamos.</h2></div>\n'
-            '      <div class="lead" style="align-items:flex-start"><a href="/contenido/" class="btn">Ver todo el contenido →</a></div>\n'
+            '      <div><div class="eyebrow">Blog</div><h2>Lo último que publicamos.</h2></div>\n'
+            '      <div class="lead" style="align-items:flex-start"><a href="/blog/" class="btn">Ver todo el blog →</a></div>\n'
             '    </div>\n    <div class="posts">' + "".join(tarjeta(p) for p in pubs[:3]) + '</div>\n  </div>\n</section>\n')
     else:
         bloque = ""
@@ -178,9 +180,9 @@ def pagina_lista(t, pubs):
     else:
         lista = '<p class="vacio">Pronto publicaremos aquí artículos y videos.</p>'
     cuerpo = ('<section>\n  <div class="wrap">\n    <div class="head">\n'
-              '      <div><div class="eyebrow">Contenido</div><h2>Artículos y videos.</h2></div>\n'
+              '      <div><div class="eyebrow">Blog</div><h2>Artículos y videos.</h2></div>\n'
               '    </div>\n    ' + lista + '\n  </div>\n</section>')
-    return subpagina(t, "Contenido · InGot", "Artículos y videos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial.", "/contenido/", cuerpo)
+    return subpagina(t, "Blog · InGot", "Artículos y videos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial.", "/blog/", cuerpo)
 
 
 def pagina_publicacion(t, p):
@@ -193,15 +195,27 @@ def pagina_publicacion(t, p):
         medio = f'<img class="portada" src="{esc(p["imagen"])}" alt="{esc(p["imagen_alt"])}">'
     else:
         medio = ""
+    indice = ""
+    if len(p["indice"]) >= 2:
+        indice = ('<nav class="indice" aria-label="En este artículo"><span>En este artículo</span>'
+                  + "".join(f'<a href="#{i}">{n}</a>' for i, n in p["indice"]) + "</nav>")
     cuerpo = ('<article class="articulo">\n'
-              '  <a class="volver" href="/contenido/">← Contenido</a>\n'
-              f'  <span class="eyebrow">{esc(p["tipo"])} · {p["fecha_txt"]}</span>\n'
-              f'  <h1>{esc(p["titulo"])}</h1>\n'
-              + (f'  <p class="resumen">{esc(p["resumen"])}</p>\n' if p["resumen"] else "")
-              + f'  {medio}\n  <div class="cuerpo">{p["html"]}</div>\n'
-              '  <div style="padding-top:24px;border-top:1px solid var(--slate)"><a href="/#contacto" class="btn">Quiero mi Preview sin costo →</a></div>\n'
+              '  <header class="art-head">\n'
+              '    <a class="volver" href="/blog/">← Blog</a>\n'
+              f'    <span class="eyebrow">{esc(p["tipo"])} · {p["fecha_txt"]}</span>\n'
+              f'    <h1>{esc(p["titulo"])}</h1>\n'
+              + (f'    <p class="resumen">{esc(p["resumen"])}</p>\n' if p["resumen"] else "")
+              + '  </header>\n'
+              f'  {medio}\n'
+              '  <div class="art-grid">\n'
+              f'    <div class="cuerpo">{p["html"]}</div>\n'
+              '    <aside class="art-aside">' + indice
+              + '<div class="art-cta"><strong>¿Tu presencia refleja el valor de tu empresa?</strong>'
+              '<p>Te mostramos qué vemos antes de trabajar juntos.</p>'
+              '<a href="/#contacto" class="btn">Quiero mi Preview sin costo →</a></div></aside>\n'
+              '  </div>\n'
               '</article>')
-    ruta = f'/contenido/{p["slug"]}/'
+    ruta = f'/blog/{p["slug"]}/'
     img = p["imagen"] if p["imagen"].startswith("http") else DOMINIO + (p["imagen"] or "/assets/portada.webp")
     # Datos estructurados de artículo para Google (lo que hace Yoast en WordPress)
     ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["titulo"],
@@ -233,12 +247,12 @@ def main():
         destino.write_text(texto, encoding="utf-8")
 
     escribir("index.html", portada(t, pubs, particulas))
-    escribir("contenido/index.html", pagina_lista(t, pubs))
+    escribir("blog/index.html", pagina_lista(t, pubs))
     for p in pubs:
-        escribir(f"contenido/{p['slug']}/index.html", pagina_publicacion(t, p))
+        escribir(f"blog/{p['slug']}/index.html", pagina_publicacion(t, p))
 
     hoy = dt.date.today().isoformat()
-    urls = [("/", hoy), ("/contenido/", hoy)] + [(f"/contenido/{p['slug']}/", p["fecha"].date().isoformat()) for p in pubs]
+    urls = [("/", hoy), ("/blog/", hoy)] + [(f"/blog/{p['slug']}/", p["fecha"].date().isoformat()) for p in pubs]
     escribir("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
              + "".join(f"  <url><loc>{DOMINIO}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls) + "</urlset>\n")
     escribir("robots.txt", f"User-agent: *\nDisallow: /admin/\nSitemap: {DOMINIO}/sitemap.xml\n")
