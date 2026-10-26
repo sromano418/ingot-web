@@ -23,14 +23,14 @@ __META_EXTRA__
 :root{
   /* Paleta invertida (fondo claro). Los nombres vienen de la versión oscura:
      --ink = fondo general, --cream = texto general; .light/.stone/.slate son las bandas. */
-  --ink:#EEEAE2;      /* marca: crema (fondo) */
+  --ink:#FFFFFF;      /* fondo blanco */
   --cream:#222222;    /* marca: grafito (texto) */
   --copper:#A4471F;   /* marca: cobre */
   --copper-dk:#D4824F;/* cobre legible sobre fondos oscuros */
   --on-copper:#EEEAE2;/* texto sobre cobre */
   --greige:#6B655C;   /* texto secundario sobre claro (derivado de #B9B2A6) */
   --sec:#4A4743;      /* texto de apoyo sobre claro */
-  --slate:#E3DED4; --stone:#2E2D2B; --line-d:#D3CCBF; --line-l:#4A4743; --muted:#857E72;
+  --slate:#F6F5F3; --stone:#2E2D2B; --line-d:#D3CCBF; --line-l:#4A4743; --muted:#857E72;
   color-scheme:light;
 }
 html{scroll-behavior:smooth}
@@ -62,7 +62,7 @@ h2{font-family:'Montserrat',sans-serif;font-size:clamp(32px,4.2vw,56px);font-wei
 .mono{font-family:'Montserrat',sans-serif}
 
 /* nav */
-nav{position:sticky;top:0;z-index:10;background:rgba(238,234,226,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--slate)}
+nav{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--slate)}
 nav .in{max-width:1280px;margin:0 auto;padding:16px clamp(20px,5vw,64px);display:flex;align-items:center;justify-content:space-between;gap:24px}
 nav .links{display:flex;align-items:center;gap:28px;font-size:15px;flex-wrap:wrap;justify-content:flex-end}
 nav .links a:not(.cta){color:var(--sec)}
