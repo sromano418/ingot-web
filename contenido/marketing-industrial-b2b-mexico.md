@@ -206,7 +206,7 @@ Los cambios de marca, sitio y LinkedIn se notan en las primeras conversaciones c
 
 Depende del volumen de trabajo. Una agencia especializada aporta método y experiencia en el sector desde el primer mes; un equipo interno conoce mejor el producto. Muchas empresas del sector industrial combinan ambos: la agencia construye el sistema y el equipo interno lo opera.
 
-Ingot ayuda a empresas del sector industrial de metales, energía y agro a verse a la altura de su operación. Solicita tu auditoría de autoridad industrial.
+InGot ayuda a empresas del sector industrial de metales, energía y agro a verse a la altura de su operación. Solicita tu auditoría de autoridad industrial.
 
 ## Fuentes
 
