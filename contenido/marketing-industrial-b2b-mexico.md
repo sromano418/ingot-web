@@ -168,7 +168,7 @@ Cada paso se apoya en el anterior. Una campaña de correo que lleva a un sitio d
 
 ## Caso InHedge, de firma de nicho a referente digital
 
-[InHedge](InHedge) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. Ingot aplica el mismo método con el que se construyó su presencia digital:
+[InHedge](InHedge) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. En este caso el trabajo incluyó:
 
 * Sitio bilingüe con páginas por commodity y datos de mercado actualizados
 * Cluster de contenido de gas natural con una página pilar y ocho artículos enlazados
