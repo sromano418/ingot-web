@@ -92,16 +92,20 @@ body:has(.hero) .hero{padding-top:88px}
 .brecha .t1 .l2{display:block;color:var(--cobre)}
 .brecha .txt{grid-column:1/7;margin-top:28px;font-size:clamp(19px,1.75vw,25px);font-weight:500;line-height:1.42;letter-spacing:-.01em;color:var(--gris)}
 .brecha .txt b{color:var(--negro);font-weight:700}
-.comp{grid-column:7/13;grid-row:1/span 2;align-self:start;margin:0;display:flex;flex-direction:column;gap:28px;background:#222222;color:#fff;border:0;border-radius:16px;padding:36px 36px 40px}
+.comp{grid-column:7/13;grid-row:1/span 2;align-self:start;margin:0;display:flex;flex-direction:column;gap:20px;background:transparent;border:0;padding:0}
+.cota{margin:0;background:var(--cobre);color:#fff;border-radius:16px;padding:24px 28px 26px}
+.cota h3{font-weight:800;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:#fff}
+.cota p{margin-top:8px;font-size:16px;font-weight:500;line-height:1.45;color:#fff}
+.comp-body{display:flex;flex-direction:column;gap:28px;background:#222222;color:#fff;border-radius:16px;padding:32px 32px 36px}
 .comp .col{padding:0;min-width:0;border:0;background:none;color:inherit}
 .comp h4{font-size:var(--t-lab);font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 0 18px;padding:0;display:flex;justify-content:space-between;align-items:baseline;gap:16px;color:#fff}
 .comp h4 span:first-child{flex:1}
 .comp h4 span:last-child{flex:none;color:var(--accent-2)}
+.comp .vacio h4,.comp .vacio h4 span{color:var(--accent-2)}
 .comp ul{list-style:none;display:flex;flex-direction:column;gap:18px}
 .comp li{font-weight:700;font-size:20px;line-height:1.35;letter-spacing:-.01em;padding:0;border:0;color:#E2DED6}
 .comp .vacio li{color:#E2DED6;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:8px 28px;padding:0}
 .comp .vacio li small{flex:none;max-width:52%;font-size:14px;font-weight:500;letter-spacing:0;line-height:1.4;color:#E2DED6;text-align:right;padding:0}
-.cota{margin:0;color:var(--accent-2);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1}
 .aqui{margin-top:var(--sec);background:var(--negro);color:#fff}
 .aqui .g{align-items:center;padding-top:36px;padding-bottom:36px}
 .aqui .disp{grid-column:1/8;color:#fff}
@@ -402,7 +406,9 @@ footer{background:var(--negro);padding:64px 0 0}
   .form .cta{width:100%}
   .brecha .t1{grid-column:1/13;font-size:var(--t-xl)}
   .brecha .txt{grid-column:1/13;font-size:18px}
-  .comp{grid-column:1/13;grid-row:auto;margin-top:36px;padding:28px 24px 32px}
+  .comp{grid-column:1/13;grid-row:auto;margin-top:36px;padding:0}
+  .cota{padding:22px 22px 24px}
+  .comp-body{padding:26px 22px 30px}
   .comp .vacio li{flex-direction:column;align-items:flex-start;gap:6px}.comp .vacio li small{max-width:none;text-align:left}
   .aqui{margin-top:56px}.aqui .disp,.aqui p{grid-column:1/13}.aqui p{margin-top:12px;font-size:17px}
   .dash-top{grid-template-columns:1fr;justify-items:center}
