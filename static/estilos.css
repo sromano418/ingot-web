@@ -93,9 +93,9 @@ body:has(.hero) .hero{padding-top:88px}
 .brecha .txt{grid-column:1/7;margin-top:28px;font-size:clamp(19px,1.75vw,25px);font-weight:500;line-height:1.42;letter-spacing:-.01em;color:var(--gris)}
 .brecha .txt b{color:var(--negro);font-weight:700}
 .comp{grid-column:7/13;grid-row:1/span 2;align-self:start;margin:0;display:flex;flex-direction:column;gap:24px;background:transparent;border:0;padding:0}
-.cota{margin:0;background:var(--cobre);color:#fff;border-radius:16px;padding:24px 28px 26px}
+.cota{margin:0;background:var(--cobre);color:#fff;border-radius:16px;padding:22px 16px 24px}
 .cota h3{font-weight:800;font-size:26px;line-height:1.1;letter-spacing:-.02em;color:#fff}
-.cota p{margin-top:8px;font-size:16px;font-weight:500;line-height:1.45;color:#fff}
+.cota p{margin-top:8px;font-size:15px;font-weight:500;line-height:1.45;color:#fff;text-wrap:balance}
 .comp-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
 .lado{min-width:0;border:0}
 .kicker{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;line-height:1}
@@ -377,6 +377,8 @@ footer{background:var(--negro);padding:64px 0 0}
   .preview .izq,.dash,.dash-nota,.pil-top h2,.pil-top .seq,.mercado .lead,.ba,.caso .izq,.caso .der,.ind-panel,.sec-izq,.sec-der,.con-izq,.form{grid-column:1/13}
   .brecha .t1,.brecha .txt,.comp{grid-column:1/13}
   .comp{grid-row:auto;margin-top:40px}
+  .cota{padding:22px 24px 24px}
+  .cota p{font-size:16px}
   .dash{margin-top:48px}.dash-nota{text-align:left}
   .ba{margin-top:32px}.pil-top .seq{margin-top:24px}.caso .der{margin-top:40px}.sec-der{margin-top:40px}
   .pil .pn{grid-column:1/3}.pil .pname{grid-column:3/13}.pil .pdesc{grid-column:3/9;margin-top:14px}.pil .pinc{grid-column:9/13;margin-top:14px}
