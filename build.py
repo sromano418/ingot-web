@@ -28,6 +28,9 @@ DESCRIPCION = "Hacemos visible el valor de tu empresa. Ayudamos a empresas del s
 # Enlaces que dependen de datos que aún no tenemos: se muestran solo si se llenan.
 VER_CASO_URL = ""     # p. ej. /blog/caso-servicios-financieros/
 AVISO_URL = ""        # p. ej. /aviso-de-privacidad/
+# Imagen del caso InHedge (16:10). Para publicarla, sustituye el archivo
+# assets/caso-inhedge/caso-placeholder.webp. Si cambia la ruta, actualiza este valor.
+CASO_IMAGEN = "/assets/caso-inhedge/caso-placeholder.webp"
 
 SOCIAL = [
     ("Instagram", "https://www.instagram.com/ingotmarketing/",
@@ -128,6 +131,7 @@ def plantilla():
     t = (t.replace("__FAVICON__", "/assets/favicon.png")
           .replace("__LOGO__", "/assets/marca/ingot-02.svg")
           .replace("__VER_CASO__", ver_caso)
+          .replace("__CASO_IMG__", CASO_IMAGEN)
           .replace("__LINKEDIN__", SOCIAL_HTML)
           .replace("__AVISO__", f'<a href="{AVISO_URL}">Aviso de privacidad</a>' if AVISO_URL else ""))
     return t
@@ -169,7 +173,7 @@ def fila_inicio(p, primero):
 
 def portada(t, pubs, particulas):
     filas = "".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
-    bloque = f'<section class="blog" id="blog">{filas}</section>\n'
+    bloque = f'<section class="blog reveal" id="blog">{filas}</section>\n'
     t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
     # El campo de partículas solo se inyecta si la plantilla lo pide. La portada v5 usa fotografía.
     if particulas and "__CAMPO__" in t:
