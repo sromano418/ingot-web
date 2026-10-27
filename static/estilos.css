@@ -183,7 +183,7 @@ body:has(.hero) .hero{padding-top:88px}
 .pil:hover .pinc li{border-color:rgba(244,244,242,.2)}
 .pil .pinc li span{font-size:12px;font-weight:600;color:var(--gris)}
 .pil:hover .pinc li span{color:var(--acero2)}
-.pil.on{background:#fff;color:var(--negro);box-shadow:inset 4px 0 0 var(--cobre)}
+.pil.on{background:#fff;color:var(--negro)}
 .pil.on .pn,.pil.on .pname span{color:var(--cobre)}
 .pil.on .pinc li{border-color:rgba(34,34,34,.18)}
 .pil.on .pinc li span{color:var(--gris)}
@@ -226,7 +226,7 @@ body:has(.hero) .hero{padding-top:88px}
 .mc-chart .ct span{display:block;color:var(--gris);font-weight:500;letter-spacing:0;text-transform:none;font-size:13px;margin-top:2px}
 .mc-chart svg{width:100%;height:auto;display:block;font-family:var(--f)}
 .mc-chart svg text{font-size:11px;font-weight:600;fill:#6B655C}
-.mc-chart svg text.ann{font-size:12px;font-weight:800;fill:#222222;stroke:#fff;stroke-width:4px;paint-order:stroke fill;stroke-linejoin:round}
+.mc-chart svg text.ann{font-size:12px;font-weight:800;fill:#222222}
 .mc-chart svg text.wk{font-size:10px;font-weight:800;fill:var(--accent-2);letter-spacing:.08em;stroke:#222;stroke-width:3px;paint-order:stroke fill}
 .js .mc-chart .serie{stroke-dasharray:1200;stroke-dashoffset:1200}
 .mc-tab{grid-column:10/13;padding:22px 28px 22px 4px;font-size:14px}
