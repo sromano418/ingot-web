@@ -58,7 +58,7 @@ button.cta:disabled{cursor:default;opacity:.9}
 .nav .navcta{grid-column:10/13;justify-self:end}
 .nav .navcta .cta{white-space:nowrap}
 /* En la portada el menú flota sobre la foto. En blog y artículos queda fijo, con fondo grafito. */
-body:has(.hero) .nav{position:absolute;top:0;left:0;right:0;background:transparent;z-index:20}
+body:has(.hero) .nav{position:absolute;top:0;left:0;right:0;background:rgba(34,34,34,.92);z-index:20}
 body:not(:has(.hero)) .nav{position:sticky;top:0;z-index:20;background:var(--negro)}
 body:has(.hero) .hero{padding-top:88px}
 .tag-maqueta{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acero2);border:1px solid rgba(244,244,242,.3);border-radius:999px;padding:5px 12px;white-space:nowrap}
