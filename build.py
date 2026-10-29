@@ -33,17 +33,10 @@ AVISO_URL = ""        # p. ej. /aviso-de-privacidad/
 CASO_IMAGEN = "/assets/caso-inhedge/caso-placeholder.webp"
 
 SOCIAL = [
-    ("Instagram", "https://www.instagram.com/ingotmarketing/",
-     '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/>'
-     '<circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>'
-     '<circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/>'),
     ("LinkedIn", "https://www.linkedin.com/company/ingotmarketing/",
      '<rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>'
      '<circle cx="8" cy="8" r="1.3" fill="currentColor"/>'
      '<path d="M8 11v6M12 17v-6M12 13.6c0-1.6 1.1-2.6 2.5-2.6s2.5 1 2.5 2.6V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'),
-    ("Facebook", "https://www.facebook.com/ingotmarketing",
-     '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>'
-     '<path d="M13.2 21v-7.6h2.4l.4-2.8h-2.8V8.9c0-.8.3-1.4 1.4-1.4H16V5.1c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v2.1H8.3v2.8h2.3V21" fill="currentColor"/>'),
 ]
 SOCIAL_HTML = '<div class="social">' + "".join(
     f'<a href="{url}" target="_blank" rel="noopener" aria-label="InGot en {name}" title="{name}">'

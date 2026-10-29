@@ -369,6 +369,10 @@ footer{background:var(--negro);padding:64px 0 0}
 .fc1{grid-column:1/4}.fc1 img{height:46px;width:auto}
 .fc2{grid-column:5/7}.fc3{grid-column:7/10}.fc4{grid-column:10/13}
 .fc1 div{margin-top:14px;max-width:280px}
+.social{display:flex;justify-content:flex-start;margin-top:18px}
+.social a{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1.5px solid rgba(226,222,214,.5);border-radius:999px;color:var(--on-dark)}
+.social a:hover{color:#fff;border-color:#fff}
+.social svg{width:18px;height:18px;display:block}
 .fc2 a{display:block}
 .fc4 a{color:inherit;font-weight:700}
 .fc4 a.pide{color:var(--cobre2)}
