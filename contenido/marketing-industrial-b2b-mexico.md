@@ -91,7 +91,7 @@ Las especificaciones van en texto y tablas dentro de la página. El PDF puede qu
 
 El sitio también debe cargar rápido y verse bien en celular, porque buena parte de la primera revisión ocurre desde un teléfono entre juntas.
 
-¿Quieres saber cómo ve tu empresa un comprador hoy? **Solicita tu auditoría** de autoridad industrial y recibe un diagnóstico de marca, sitio, LinkedIn y contenido.
+¿Quieres saber cómo ve tu empresa un comprador hoy? **Industrial Authority Audit.** Revisamos 21 puntos de tu presencia digital, agrupados en 6 dimensiones, y te comparamos con 2 de tus competidores. En 10 días recibes un score de 0 a 100 y una lista clara de qué corregir primero.
 
 ## LinkedIn y correo, cómo llegar al comprador
 
@@ -156,7 +156,7 @@ Los errores más caros no son de diseño, son de enfoque. Estos son los que más
 
 Empieza por lo que decide la lista corta del comprador y deja para después lo que solo amplifica. Un orden práctico para una empresa del sector industrial que parte de cero:
 
-1. **Diagnóstico.** Revisar marca, sitio, LinkedIn, correo, contenido y presencia en Google y en IA con una auditoría de autoridad industrial.
+1. **Diagnóstico.** Revisamos 21 puntos de tu presencia digital, agrupados en 6 dimensiones, y te comparamos con 2 de tus competidores. En 10 días recibes un score de 0 a 100 y una lista clara de qué corregir primero.
 2. **Marca.** Corregir logo, plantillas y firma de correo para que todo el equipo comunique lo mismo.
 3. **Sitio web.** Publicar páginas por producto o servicio, capacidades, casos y un formulario corto de cotización.
 4. **LinkedIn.** Completar la página de empresa y los perfiles del equipo comercial, y publicar con frecuencia fija.
@@ -168,7 +168,7 @@ Cada paso se apoya en el anterior. Una campaña de correo que lleva a un sitio d
 
 ## Caso InHedge, de firma de nicho a referente digital
 
-[InHedge](InHedge) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. Ingot aplica el mismo método con el que se construyó su presencia digital:
+[InHedge](InHedge) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. En este caso el trabajo incluyó:
 
 * Sitio bilingüe con páginas por commodity y datos de mercado actualizados
 * Cluster de contenido de gas natural con una página pilar y ocho artículos enlazados
@@ -206,7 +206,7 @@ Los cambios de marca, sitio y LinkedIn se notan en las primeras conversaciones c
 
 Depende del volumen de trabajo. Una agencia especializada aporta método y experiencia en el sector desde el primer mes; un equipo interno conoce mejor el producto. Muchas empresas del sector industrial combinan ambos: la agencia construye el sistema y el equipo interno lo opera.
 
-Ingot ayuda a empresas del sector industrial de metales, energía y agro a verse a la altura de su operación. Solicita tu auditoría de autoridad industrial.
+InGot ayuda a empresas del sector industrial de metales, energía y agro a verse a la altura de su operación. Antes de proponerte algo, medimos. Revisamos 21 puntos de tu presencia digital, agrupados en 6 dimensiones, y te comparamos con 2 de tus competidores. En 10 días recibes un score de 0 a 100 y una lista clara de qué corregir primero.
 
 ## Fuentes
 

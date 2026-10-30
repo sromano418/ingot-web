@@ -23,24 +23,20 @@ import yaml
 RAIZ = Path(__file__).resolve().parent
 SALIDA = RAIZ / "_site"
 DOMINIO = "https://ingot.mx"
-DESCRIPCION = "Marketing apoyado por inteligencia artificial para empresas del sector industrial. Hacemos visible el valor de tu empresa."
+DESCRIPCION = "Hacemos visible el valor de tu empresa. Ayudamos a empresas del sector industrial a construir presencia, visibilidad y contenido de su mercado."
 
 # Enlaces que dependen de datos que aún no tenemos: se muestran solo si se llenan.
 VER_CASO_URL = ""     # p. ej. /blog/caso-servicios-financieros/
 AVISO_URL = ""        # p. ej. /aviso-de-privacidad/
+# Imagen del caso InHedge (16:10). Para publicarla, sustituye el archivo
+# assets/caso-inhedge/caso-placeholder.webp. Si cambia la ruta, actualiza este valor.
+CASO_IMAGEN = "/assets/caso-inhedge/caso-placeholder.webp"
 
 SOCIAL = [
-    ("Instagram", "https://www.instagram.com/ingotmarketing/",
-     '<rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/>'
-     '<circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>'
-     '<circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/>'),
     ("LinkedIn", "https://www.linkedin.com/company/ingotmarketing/",
      '<rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/>'
      '<circle cx="8" cy="8" r="1.3" fill="currentColor"/>'
      '<path d="M8 11v6M12 17v-6M12 13.6c0-1.6 1.1-2.6 2.5-2.6s2.5 1 2.5 2.6V17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'),
-    ("Facebook", "https://www.facebook.com/ingotmarketing",
-     '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/>'
-     '<path d="M13.2 21v-7.6h2.4l.4-2.8h-2.8V8.9c0-.8.3-1.4 1.4-1.4H16V5.1c-.3 0-1.1-.1-2-.1-2 0-3.4 1.2-3.4 3.5v2.1H8.3v2.8h2.3V21" fill="currentColor"/>'),
 ]
 SOCIAL_HTML = '<div class="social">' + "".join(
     f'<a href="{url}" target="_blank" rel="noopener" aria-label="InGot en {name}" title="{name}">'
@@ -123,16 +119,19 @@ def tarjeta(p):
 
 def plantilla():
     t = (RAIZ / "plantilla" / "inicio.html").read_text(encoding="utf-8")
-    t = (t.replace("__FAVICON__", "/assets/favicon.png").replace("__LOGO__", "/assets/logo-oscuro.png")
-          .replace("__HERO__", "/assets/portada.webp").replace("__WHY__", "/assets/industria.webp")
-          .replace("__VER_CASO__", f'<div style="margin-top:auto;padding-top:8px"><a href="{VER_CASO_URL}" class="btn">Ver caso →</a></div>' if VER_CASO_URL else "")
+    ver_caso = (f'<a class="cta blanco" href="{VER_CASO_URL}">Ver el caso <span class="flecha" aria-hidden="true">→</span></a>'
+                if VER_CASO_URL else "")
+    t = (t.replace("__FAVICON__", "/assets/favicon.png")
+          .replace("__LOGO__", "/assets/marca/ingot-02.svg")
+          .replace("__VER_CASO__", ver_caso)
+          .replace("__CASO_IMG__", CASO_IMAGEN)
           .replace("__LINKEDIN__", SOCIAL_HTML)
           .replace("__AVISO__", f'<a href="{AVISO_URL}">Aviso de privacidad</a>' if AVISO_URL else ""))
     return t
 
 
 def meta(titulo, descripcion, ruta, imagen="", tipo="website", extra=""):
-    img = imagen if imagen.startswith("http") else DOMINIO + (imagen or "/assets/portada.webp")
+    img = imagen if imagen.startswith("http") else DOMINIO + (imagen or "/assets/colada.webp")
     return (f'<link rel="canonical" href="{DOMINIO}{ruta}">\n'
             f'<meta property="og:type" content="{tipo}">\n'
             f'<meta property="og:title" content="{esc(titulo)}">\n'
@@ -155,17 +154,22 @@ def subpagina(t, titulo, descripcion, ruta, cuerpo, imagen="", tipo="website", e
     return inicio + "<main>\n" + cuerpo + "\n</main>\n\n" + pie + "\n</body>\n</html>\n"
 
 
+def fila_inicio(p, primero):
+    etiqueta = "Lo último que publicamos" if primero else esc(p["tipo"])
+    resumen = f'{esc(p["resumen"])}<br>' if p["resumen"] else ""
+    return (f'<a href="/blog/{p["slug"]}/">'
+            f'<div class="meta"><span class="mono">{etiqueta}</span>'
+            f'<span class="mono">{esc(p["tipo"])} · {p["fecha_txt"]}</span></div>'
+            f'<h3>{esc(p["titulo"])}</h3>'
+            f'<div class="bd">{resumen}<span class="lnk">Leer artículo →</span></div></a>')
+
+
 def portada(t, pubs, particulas):
-    if pubs:
-        bloque = (
-            '<section class="light">\n  <div class="wrap">\n    <div class="head">\n'
-            '      <div><div class="eyebrow">Blog</div><h2>Lo último que publicamos.</h2></div>\n'
-            '      <div class="lead" style="align-items:flex-start"><a href="/blog/" class="btn">Ver todo el blog →</a></div>\n'
-            '    </div>\n    <div class="posts">' + "".join(tarjeta(p) for p in pubs[:3]) + '</div>\n  </div>\n</section>\n')
-    else:
-        bloque = ""
-    t = cabeza(t, "InGot", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
-    if particulas:
+    filas = "".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
+    bloque = f'<section class="blog reveal" id="blog">{filas}</section>\n'
+    t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
+    # El campo de partículas solo se inyecta si la plantilla lo pide. La portada v5 usa fotografía.
+    if particulas and "__CAMPO__" in t:
         js = (RAIZ / "plantilla" / "particulas.js").read_text(encoding="utf-8")
         t = t.replace("__CAMPO__", '<canvas id="campo" aria-hidden="true"></canvas>')
         t = t.replace("</body>", f"<script>\n{js}</script>\n</body>", 1)
@@ -216,7 +220,7 @@ def pagina_publicacion(t, p):
               '  </div>\n'
               '</article>')
     ruta = f'/blog/{p["slug"]}/'
-    img = p["imagen"] if p["imagen"].startswith("http") else DOMINIO + (p["imagen"] or "/assets/portada.webp")
+    img = p["imagen"] if p["imagen"].startswith("http") else DOMINIO + (p["imagen"] or "/assets/colada.webp")
     # Datos estructurados de artículo para Google (lo que hace Yoast en WordPress)
     ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["titulo"],
           "description": p["meta_description"], "image": img, "datePublished": p["fecha"].date().isoformat(),
@@ -256,9 +260,11 @@ def main():
     escribir("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
              + "".join(f"  <url><loc>{DOMINIO}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls) + "</urlset>\n")
     escribir("robots.txt", f"User-agent: *\nDisallow: /admin/\nSitemap: {DOMINIO}/sitemap.xml\n")
-    sobrantes = re.findall(r"__[A-Z_]+__", (SALIDA / "index.html").read_text(encoding="utf-8"))
+    html_portada = (SALIDA / "index.html").read_text(encoding="utf-8")
+    sobrantes = re.findall(r"__[A-Z_]+__", html_portada)
     assert not sobrantes, sobrantes
-    print(f"ok: {len(pubs)} publicaciones, partículas={'sí' if particulas else 'no'}")
+    campo = 'id="campo"' in html_portada
+    print(f"ok: {len(pubs)} publicaciones, partículas={'sí' if campo else 'no'}")
 
 
 if __name__ == "__main__":
