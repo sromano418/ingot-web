@@ -48,6 +48,28 @@ PLAY = '<span class="play" aria-hidden="true"><svg width="16" height="16" viewBo
 esc = html.escape
 
 
+def unir_ultimas(texto):
+    """Evita una palabra sola al final si el navegador no tiene text-wrap: balance."""
+    partes = texto.rsplit(" ", 1)
+    if len(partes) == 2 and partes[0].strip() and partes[1].strip():
+        return partes[0] + "&nbsp;" + partes[1]
+    return texto
+
+
+def titulo_html(texto):
+    return unir_ultimas(esc(texto))
+
+
+def equilibrar_encabezados(fragmento):
+    def repl(m):
+        tag, attrs, inner = m.group(1), m.group(2) or "", m.group(3)
+        if "<" in inner:
+            return m.group(0)
+        return f"<{tag}{attrs}>{unir_ultimas(inner)}</{tag}>"
+
+    return re.sub(r"<(h[123])(\s[^>]*)?>(.*?)</\1>", repl, fragmento, flags=re.I | re.S)
+
+
 # ── publicaciones ─────────────────────────────────────────────────────────────
 
 def youtube_id(url):
@@ -111,7 +133,7 @@ def tarjeta(p):
     return (f'<a class="post-card" href="/blog/{p["slug"]}/">'
             f'<div class="{clase}"{fondo}>{play}</div>'
             f'<div class="txt"><span class="meta">{esc(p["tipo"])} · {p["fecha_txt"]}</span>'
-            f'<h3>{esc(p["titulo"])}</h3>'
+            f'<h3>{titulo_html(p["titulo"])}</h3>'
             + (f'<p>{esc(p["resumen"])}</p>' if p["resumen"] else "") + "</div></a>")
 
 
@@ -160,7 +182,7 @@ def fila_inicio(p, primero):
     return (f'<a href="/blog/{p["slug"]}/">'
             f'<div class="meta"><span class="mono">{etiqueta}</span>'
             f'<span class="mono">{esc(p["tipo"])} · {p["fecha_txt"]}</span></div>'
-            f'<h3>{esc(p["titulo"])}</h3>'
+            f'<h3>{titulo_html(p["titulo"])}</h3>'
             f'<div class="bd">{resumen}<span class="lnk">Leer artículo →</span></div></a>')
 
 
@@ -179,10 +201,12 @@ def portada(t, pubs, particulas):
 
 
 def pagina_lista(t, pubs):
-    if pubs:
-        lista = '<div class="posts">' + "".join(tarjeta(p) for p in pubs) + "</div>"
-    else:
+    if not pubs:
         lista = '<p class="vacio">Pronto publicaremos aquí artículos y videos.</p>'
+    elif len(pubs) == 1:
+        lista = '<div class="posts posts-uno">' + tarjeta(pubs[0]) + "</div>"
+    else:
+        lista = '<div class="posts">' + "".join(tarjeta(p) for p in pubs) + "</div>"
     cuerpo = ('<section>\n  <div class="wrap">\n    <div class="head">\n'
               '      <div><div class="eyebrow">Blog</div><h2>Artículos y videos.</h2></div>\n'
               '    </div>\n    ' + lista + '\n  </div>\n</section>')
@@ -207,12 +231,12 @@ def pagina_publicacion(t, p):
               '  <header class="art-head">\n'
               '    <a class="volver" href="/blog/">← Blog</a>\n'
               f'    <span class="eyebrow">{esc(p["tipo"])} · {p["fecha_txt"]}</span>\n'
-              f'    <h1>{esc(p["titulo"])}</h1>\n'
+              f'    <h1>{titulo_html(p["titulo"])}</h1>\n'
               + (f'    <p class="resumen">{esc(p["resumen"])}</p>\n' if p["resumen"] else "")
               + '  </header>\n'
               f'  {medio}\n'
               '  <div class="art-grid">\n'
-              f'    <div class="cuerpo">{p["html"]}</div>\n'
+              f'    <div class="cuerpo">{equilibrar_encabezados(p["html"])}</div>\n'
               '    <aside class="art-aside">' + indice
               + '<div class="art-cta"><strong>¿Tu presencia refleja el valor de tu empresa?</strong>'
               '<p>Te mostramos qué vemos antes de trabajar juntos.</p>'
