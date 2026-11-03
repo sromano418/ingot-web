@@ -189,7 +189,7 @@ def fila_inicio(p, primero):
 def portada(t, pubs, particulas):
     filas = "".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
     bloque = f'<section class="blog reveal" id="blog">{filas}</section>\n'
-    t = cabeza(t, "InGot · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
+    t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
     # El campo de partículas solo se inyecta si la plantilla lo pide. La portada v5 usa fotografía.
     if particulas and "__CAMPO__" in t:
         js = (RAIZ / "plantilla" / "particulas.js").read_text(encoding="utf-8")
