@@ -189,7 +189,7 @@ def fila_inicio(p, primero):
 def portada(t, pubs, particulas):
     filas = "".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
     bloque = f'<section class="blog reveal" id="blog">{filas}</section>\n'
-    t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
+    t = cabeza(t, "InGot · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
     # El campo de partículas solo se inyecta si la plantilla lo pide. La portada v5 usa fotografía.
     if particulas and "__CAMPO__" in t:
         js = (RAIZ / "plantilla" / "particulas.js").read_text(encoding="utf-8")
@@ -202,15 +202,15 @@ def portada(t, pubs, particulas):
 
 def pagina_lista(t, pubs):
     if not pubs:
-        lista = '<p class="vacio">Pronto publicaremos aquí artículos y videos.</p>'
+        lista = '<p class="vacio">Pronto publicaremos aquí artículos.</p>'
     elif len(pubs) == 1:
         lista = '<div class="posts posts-uno">' + tarjeta(pubs[0]) + "</div>"
     else:
         lista = '<div class="posts">' + "".join(tarjeta(p) for p in pubs) + "</div>"
     cuerpo = ('<section>\n  <div class="wrap">\n    <div class="head">\n'
-              '      <div><div class="eyebrow">Blog</div><h2>Artículos y videos.</h2></div>\n'
+              '      <div><div class="eyebrow">Blog</div><h2>Artículos.</h2></div>\n'
               '    </div>\n    ' + lista + '\n  </div>\n</section>')
-    return subpagina(t, "Blog · InGot", "Artículos y videos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial.", "/blog/", cuerpo)
+    return subpagina(t, "Blog · InGot", "Artículos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial.", "/blog/", cuerpo)
 
 
 def pagina_publicacion(t, p):
@@ -249,8 +249,8 @@ def pagina_publicacion(t, p):
     ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["titulo"],
           "description": p["meta_description"], "image": img, "datePublished": p["fecha"].date().isoformat(),
           "mainEntityOfPage": DOMINIO + ruta, "inLanguage": "es-MX",
-          "author": {"@type": "Organization", "name": "InGot Marketing", "url": DOMINIO},
-          "publisher": {"@type": "Organization", "name": "InGot Marketing",
+          "author": {"@type": "Organization", "name": "InGot", "url": DOMINIO},
+          "publisher": {"@type": "Organization", "name": "InGot",
                         "logo": {"@type": "ImageObject", "url": DOMINIO + "/assets/logo-oscuro.png"}}}
     if p["keyword"]:
         ld["keywords"] = p["keyword"]
