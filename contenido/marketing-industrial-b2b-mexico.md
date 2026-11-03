@@ -7,8 +7,7 @@ resumen: Cómo una empresa del sector industrial mexicana mejora su presencia
   ante compradores con marca, sitio web, LinkedIn y correo. Guía práctica con
   ejemplos de metales, energía y agro.
 imagen: /assets/uploads/ingot-industrial-marketing.jpg
-imagen_alt: marketing B2B industrial, marketing para empresas del sector
-  industrial, agencia de marketing industrial, marketing para manufactura
+imagen_alt: 'Portada de InGot sobre marketing B2B para empresas del sector industrial en México: texto “Marketing B2B para empresas del sector industrial” junto a una ruta de siete pasos, de diagnóstico a medición'
 seo:
   keyword: marketing industrial
   meta_title: Marketing industrial B2B en México para metales y energía
@@ -39,7 +38,7 @@ Cambia quién decide, cuánto tarda la compra y qué contenido convence.
 | Motivo de compra       | Precio, gusto, conveniencia      | Especificación técnica, confiabilidad, riesgo de suministro |
 | Canales principales    | Redes sociales, anuncios, tienda | Búsqueda, LinkedIn, correo, recomendación                   |
 | Contenido que convence | Imagen y oferta                  | Fichas técnicas, casos, certificaciones                     |
-| Métrica de éxito       | Ventas por campaña               | Prospectoes y contratos ganados                             |
+| Métrica de éxito       | Ventas por campaña               | Prospectos y contratos ganados                              |
 
 Datos de grupo de compras y ciclo: estudio internacional de [6sense 2024](https://www.demandgenreport.com/industry-news/80-of-b2b-buyers-initiate-first-contact-once-theyre-70-through-their-buying-jou) con compradores de compras mayores a 10,000 dólares anuales.
 
@@ -149,7 +148,7 @@ Los errores más caros no son de diseño, son de enfoque. Estos son los que más
 2. **Tratar el sitio como un folleto.** Un sitio de cinco páginas sin especificaciones ni casos no responde las preguntas del comprador y no genera cotizaciones.
 3. **Publicar en redes sin una línea editorial.** Felicitaciones de fechas cívicas y fotos de eventos internos no le dicen nada a un director de compras. Los datos del mercado, los casos y la operación real sí.
 4. **Dejar a cada vendedor con su propia versión de la marca.** Presentaciones distintas, firmas distintas y cotizaciones sin formato transmiten desorden.
-5. Medir por likes o visitas. Con ciclos de casi un año, la métrica que importa es cuántas solicitudes llegan y cuántas se cierran.
+5. **Medir por likes o visitas.** Con ciclos de casi un año, la métrica que importa es cuántas solicitudes llegan y cuántas se cierran.
 6. **Empezar por la herramienta y no por el comprador.** Contratar anuncios o un CRM antes de definir a quién se le vende y qué necesita leer ese comprador para confiar.
 
 ## ¿Por dónde empezar?
@@ -162,13 +161,13 @@ Empieza por lo que decide la lista corta del comprador y deja para después lo q
 4. **LinkedIn.** Completar la página de empresa y los perfiles del equipo comercial, y publicar con frecuencia fija.
 5. **Contenido y SEO.** Escribir guías y fichas técnicas que respondan las búsquedas reales de los compradores.
 6. **Prospección.** Activar secuencias de correo y mensajes en LinkedIn hacia cuentas objetivo.
-7. Medición. Registrar en el CRM de dónde llega cada prospecto y revisar resultados cada mes.
+7. **Medición.** Registrar en el CRM de dónde llega cada prospecto y revisar resultados cada mes.
 
 Cada paso se apoya en el anterior. Una campaña de correo que lleva a un sitio desactualizado puede perder interés desde el primer clic.
 
-## Caso InHedge, de firma de nicho a referente digital
+## Caso InHedge, presencia digital para un mercado técnico
 
-[InHedge](InHedge) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. En este caso el trabajo incluyó:
+[InHedge](https://inhedge.mx/) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. En este caso el trabajo incluyó:
 
 * Sitio bilingüe con páginas por commodity y datos de mercado actualizados
 * Cluster de contenido de gas natural con una página pilar y ocho artículos enlazados
@@ -190,7 +189,7 @@ Cada paso se apoya en el anterior. Una campaña de correo que lleva a un sitio d
 
 ## Preguntas frecuentes
 
-¿Cuánto debe invertir una empresa del sector industrial en marketing?
+**¿Cuánto debe invertir una empresa del sector industrial en marketing?**
 
 No hay una cifra única; depende del tamaño de la empresa, su mercado y el punto de partida. Lo recomendable es invertir primero en lo que decide la lista corta del comprador: marca, sitio web y LinkedIn, y medir el resultado por prospectos generados.
 
