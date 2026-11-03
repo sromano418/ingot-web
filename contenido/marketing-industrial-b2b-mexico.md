@@ -105,8 +105,6 @@ Lo que funciona en LinkedIn para empresas del sector industrial:
 
 El **correo B2B** complementa a LinkedIn. Un correo de dominio propio con autenticación SPF, DKIM y DMARC llega a la bandeja de entrada; uno de Gmail o mal configurado termina en spam o se ve poco serio. Las secuencias que consiguen reuniones son cortas, mencionan un problema concreto del comprador y piden una sola acción.
 
-Facebook e Instagram tienen un uso distinto en la industria. Rara vez generan cotizaciones directas, pero sirven para mostrar cultura, atraer talento, cubrir eventos y reforzar la marca ante proveedores y la comunidad local.
-
 ## SEO y contenido técnico para aparecer en la búsqueda
 
 El SEO industrial consiste en aparecer cuando un comprador busca un proveedor, un producto o una norma. Las búsquedas que importan son específicas y tienen intención de compra: “proveedor de aluminio P1020 en México”, “distribuidor de lámina rolada en caliente en Monterrey”, “cobertura de precio de gas natural para industria”.
@@ -170,7 +168,7 @@ Cada paso se apoya en el anterior. Una campaña de correo que lleva a un sitio d
 [InHedge](https://inhedge.mx/) es una firma de Monterrey que asesora coberturas financieras de metales, energía, agro y tipo de cambio. Su mercado es pequeño y técnico, y sus compradores son directores de finanzas y compras de empresas del sector industrial. En este caso el trabajo incluyó:
 
 * Sitio bilingüe con páginas por commodity y datos de mercado actualizados
-* Cluster de contenido de gas natural con una página pilar y ocho artículos enlazados
+* Cluster de contenido de gas natural con una página pilar y artículos enlazados
 * Contenido diseñado para que lo citen buscadores y asistentes de IA
 * LinkedIn de empresa y de equipo con publicaciones de mercado frecuentes
 * Una plataforma de suscripción, [InHedge Intelligence](https://intelligence.inhedge.mx/), que convierte el contenido en producto
