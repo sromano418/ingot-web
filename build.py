@@ -14,6 +14,7 @@ import html
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -24,6 +25,11 @@ RAIZ = Path(__file__).resolve().parent
 SALIDA = RAIZ / "_site"
 DOMINIO = "https://ingot.mx"
 DESCRIPCION = "Hacemos visible el valor de tu empresa. Ayudamos a empresas del sector industrial a construir presencia, visibilidad y contenido de su mercado."
+# JPG de la foto de portada, 1200×627, sin transparencia. Solo Open Graph de inicio y /blog/.
+OG_PORTADA = "/assets/colada-og.jpg"
+OG_PORTADA_ALT = "Colada de metal fundido en una planta"
+OG_PORTADA_ANCHO = "1200"
+OG_PORTADA_ALTO = "627"
 
 # Enlaces que dependen de datos que aún no tenemos: se muestran solo si se llenan.
 VER_CASO_URL = ""     # p. ej. /blog/caso-servicios-financieros/
@@ -98,6 +104,7 @@ def leer_publicaciones():
         if meta.get("borrador"):
             continue
         fecha = a_fecha(meta.get("fecha"))
+        modificada = a_fecha(meta.get("fecha_modificacion")) if meta.get("fecha_modificacion") else None
         vid = youtube_id(meta.get("video"))
         imagen = meta.get("imagen") or (f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg" if vid else "")
         seo = meta.get("seo") or {}
@@ -114,6 +121,7 @@ def leer_publicaciones():
             "imagen_alt": str(meta.get("imagen_alt") or ""),
             "tipo": meta.get("tipo") or ("Video" if meta.get("video") else "Artículo"),
             "fecha": fecha,
+            "modificada": modificada.date().isoformat() if modificada else "",
             "fecha_txt": f"{fecha.day} {MESES[fecha.month - 1]} {fecha.year}",
             "imagen": imagen,
             "video": meta.get("video") or "",
@@ -121,6 +129,7 @@ def leer_publicaciones():
             # nl2br: respeta los saltos de línea de texto pegado sin líneas en blanco
             "html": md.convert(cuerpo),
             "indice": [(t["id"], t["name"]) for t in md.toc_tokens if t["level"] == 2],
+            "archivo": f,
         })
     pubs.sort(key=lambda p: p["fecha"], reverse=True)
     return pubs
@@ -152,25 +161,132 @@ def plantilla():
     return t
 
 
-def meta(titulo, descripcion, ruta, imagen="", tipo="website", extra=""):
-    img = imagen if imagen.startswith("http") else DOMINIO + (imagen or "/assets/colada.webp")
-    return (f'<link rel="canonical" href="{DOMINIO}{ruta}">\n'
-            f'<meta property="og:type" content="{tipo}">\n'
-            f'<meta property="og:title" content="{esc(titulo)}">\n'
-            f'<meta property="og:description" content="{esc(descripcion)}">\n'
-            f'<meta property="og:url" content="{DOMINIO}{ruta}">\n'
-            f'<meta property="og:image" content="{esc(img)}">\n'
-            f'<meta name="twitter:card" content="summary_large_image">' + extra)
+def script_ld(datos):
+    crudo = json.dumps(datos, ensure_ascii=False).replace("</", "<\\/")
+    return f'<script type="application/ld+json">{crudo}</script>'
 
 
-def cabeza(t, titulo, descripcion, ruta, imagen="", tipo="website", extra=""):
+def _git(args):
+    try:
+        proc = subprocess.run(
+            ["git", "-C", str(RAIZ), *args],
+            check=False, capture_output=True, text=True, timeout=10,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return None
+    if proc.returncode != 0:
+        return None
+    return proc.stdout or ""
+
+
+def _dia_git(salida):
+    linea = (salida or "").strip()
+    return linea if re.fullmatch(r"\d{4}-\d{2}-\d{2}", linea) else None
+
+
+def fecha_commit(ruta):
+    """Fecha YYYY-MM-DD del último commit que tocó el archivo.
+
+    En un clon superficial (Netlify usa depth 1) `git log -- archivo` devuelve
+    HEAD aunque ese commit no haya tocado el archivo. Esa fecha no se usa.
+    """
+    rel = Path(ruta).resolve().relative_to(RAIZ).as_posix()
+    shallow = (_git(["rev-parse", "--is-shallow-repository"]) or "").strip() == "true"
+    if shallow:
+        tocados = {ln.strip() for ln in (_git(["diff-tree", "--no-commit-id", "--name-only", "-r", "HEAD"]) or "").splitlines()}
+        if rel not in tocados:
+            return None
+        return _dia_git(_git(["log", "-1", "--format=%cs"]))
+    return _dia_git(_git(["log", "-1", "--format=%cs", "--", rel]))
+
+
+def preguntas_visibles(html_art):
+    """Pares de la sección visible «Preguntas frecuentes». Vacío si no hay pregunta y respuesta."""
+    seccion = re.search(
+        r"<h2[^>]*>\s*Preguntas frecuentes\s*</h2>(.*?)(?=<h2\b|$)",
+        html_art, re.I | re.S)
+    if not seccion:
+        return []
+    paras = re.findall(r"<p>(.*?)</p>", seccion.group(1), re.S)
+    faqs = []
+    i = 0
+    while i < len(paras) - 1:
+        preg = re.fullmatch(r"<strong>(.+?)</strong>", paras[i].strip(), re.S)
+        if not preg:
+            i += 1
+            continue
+        pregunta = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", preg.group(1)))).strip()
+        respuesta = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", paras[i + 1]))).strip()
+        if not pregunta.endswith("?") or not respuesta or respuesta.endswith("?"):
+            i += 1
+            continue
+        faqs.append((pregunta, respuesta))
+        i += 2
+    return faqs
+
+
+def ld_sitio():
+    linkedin = next(url for nombre, url, _icono in SOCIAL if nombre == "LinkedIn")
+    org = DOMINIO + "/#organization"
+    return {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": org,
+                "name": "InGot Marketing",
+                "url": DOMINIO + "/",
+                "logo": DOMINIO + "/assets/logo-oscuro.png",
+                "email": "info@ingot.mx",
+                "telephone": "+528127186576",
+                "sameAs": [linkedin],
+            },
+            {
+                "@type": "WebSite",
+                "@id": DOMINIO + "/#website",
+                "name": "InGot Marketing",
+                "url": DOMINIO + "/",
+                "publisher": {"@id": org},
+                "inLanguage": "es-MX",
+            },
+        ],
+    }
+
+
+def meta(titulo, descripcion, ruta, imagen="", tipo="website", extra="", social=False):
+    if social:
+        img = DOMINIO + OG_PORTADA
+    else:
+        img = imagen if imagen.startswith("http") else DOMINIO + (imagen or "/assets/colada.webp")
+    lineas = [
+        f'<link rel="canonical" href="{DOMINIO}{ruta}">',
+        '<meta property="og:locale" content="es_MX">',
+        '<meta property="og:site_name" content="InGot">',
+        f'<meta property="og:type" content="{tipo}">',
+        f'<meta property="og:title" content="{esc(titulo)}">',
+        f'<meta property="og:description" content="{esc(descripcion)}">',
+        f'<meta property="og:url" content="{DOMINIO}{ruta}">',
+        f'<meta property="og:image" content="{esc(img)}">',
+    ]
+    if social:
+        lineas += [
+            f'<meta property="og:image:width" content="{OG_PORTADA_ANCHO}">',
+            f'<meta property="og:image:height" content="{OG_PORTADA_ALTO}">',
+            f'<meta property="og:image:alt" content="{esc(OG_PORTADA_ALT)}">',
+            f'<meta name="twitter:image" content="{esc(img)}">',
+        ]
+    lineas.append('<meta name="twitter:card" content="summary_large_image">')
+    return "\n".join(lineas) + extra
+
+
+def cabeza(t, titulo, descripcion, ruta, imagen="", tipo="website", extra="", social=False):
     return (t.replace("__TITULO__", esc(titulo)).replace("__DESCRIPCION__", esc(descripcion))
-             .replace("__META_EXTRA__", meta(titulo, descripcion, ruta, imagen, tipo, extra)))
+             .replace("__META_EXTRA__", meta(titulo, descripcion, ruta, imagen, tipo, extra, social)))
 
 
-def subpagina(t, titulo, descripcion, ruta, cuerpo, imagen="", tipo="website", extra=""):
+def subpagina(t, titulo, descripcion, ruta, cuerpo, imagen="", tipo="website", extra="", social=False):
     """Encabezado y pie de la portada alrededor de un contenido propio."""
-    t = cabeza(t, titulo, descripcion, ruta, imagen, tipo, extra)
+    t = cabeza(t, titulo, descripcion, ruta, imagen, tipo, extra, social)
     inicio = t[:t.index('<div class="hero-campo">')]
     pie = t[t.index("<footer>"):t.index("</footer>") + len("</footer>")]
     return inicio + "<main>\n" + cuerpo + "\n</main>\n\n" + pie + "\n</body>\n</html>\n"
@@ -189,7 +305,8 @@ def fila_inicio(p, primero):
 def portada(t, pubs, particulas):
     filas = "".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
     bloque = f'<section class="blog reveal" id="blog">{filas}</section>\n'
-    t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/").replace("__CONTENIDO_INICIO__", bloque)
+    t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/", social=True).replace("__CONTENIDO_INICIO__", bloque)
+    t = t.replace("</head>", script_ld(ld_sitio()) + "\n</head>", 1)
     # El campo de partículas solo se inyecta si la plantilla lo pide. La portada v5 usa fotografía.
     if particulas and "__CAMPO__" in t:
         js = (RAIZ / "plantilla" / "particulas.js").read_text(encoding="utf-8")
@@ -208,9 +325,16 @@ def pagina_lista(t, pubs):
     else:
         lista = '<div class="posts">' + "".join(tarjeta(p) for p in pubs) + "</div>"
     cuerpo = ('<section>\n  <div class="wrap">\n    <div class="head">\n'
-              '      <div><div class="eyebrow">Blog</div><h2>Artículos.</h2></div>\n'
+              '      <div><div class="eyebrow">Blog</div><h1>Artículos.</h1></div>\n'
               '    </div>\n    ' + lista + '\n  </div>\n</section>')
-    return subpagina(t, "Blog · InGot", "Artículos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial.", "/blog/", cuerpo)
+    return subpagina(
+        t,
+        "Blog de marketing para el sector industrial · InGot",
+        "Artículos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial en México: marca, sitio web, LinkedIn y contenido técnico.",
+        "/blog/",
+        cuerpo,
+        social=True,
+    )
 
 
 def pagina_publicacion(t, p):
@@ -248,6 +372,7 @@ def pagina_publicacion(t, p):
     # Datos estructurados de artículo para Google (lo que hace Yoast en WordPress)
     ld = {"@context": "https://schema.org", "@type": "BlogPosting", "headline": p["titulo"],
           "description": p["meta_description"], "image": img, "datePublished": p["fecha"].date().isoformat(),
+          "dateModified": p["modificada"] or fecha_commit(p["archivo"]) or p["fecha"].date().isoformat(),
           "mainEntityOfPage": DOMINIO + ruta, "inLanguage": "es-MX",
           "author": {"@type": "Organization", "name": "InGot", "url": DOMINIO},
           "publisher": {"@type": "Organization", "name": "InGot",
@@ -255,7 +380,18 @@ def pagina_publicacion(t, p):
     if p["keyword"]:
         ld["keywords"] = p["keyword"]
     extra = (f'\n<meta property="article:published_time" content="{p["fecha"].date().isoformat()}">'
-             f'\n<script type="application/ld+json">{json.dumps(ld, ensure_ascii=False).replace("</", "<" + chr(92) + "/")}</script>')
+             f'\n{script_ld(ld)}')
+    faqs = preguntas_visibles(p["html"])
+    if faqs:
+        extra += "\n" + script_ld({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+                {"@type": "Question", "name": pregunta,
+                 "acceptedAnswer": {"@type": "Answer", "text": respuesta}}
+                for pregunta, respuesta in faqs
+            ],
+        })
     return subpagina(t, p["meta_title"], p["meta_description"], ruta, cuerpo, p["imagen"], "article", extra)
 
 
