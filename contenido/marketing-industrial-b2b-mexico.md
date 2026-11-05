@@ -2,6 +2,7 @@
 titulo: Marketing B2B para empresas del sector industrial en México
 slug: marketing-industrial-b2b-mexico
 fecha: 2026-10-22
+fecha_modificacion: "2026-11-03"
 tipo: Artículo
 resumen: Cómo una empresa del sector industrial mexicana mejora su presencia
   ante compradores con marca, sitio web, LinkedIn y correo. Guía práctica con
@@ -11,9 +12,7 @@ imagen_alt: 'Portada de InGot sobre marketing B2B para empresas del sector indus
 seo:
   keyword: marketing industrial
   meta_title: Marketing industrial B2B en México para metales y energía
-  meta_description: Cómo una empresa del sector industrial mexicana mejora su
-    presencia ante compradores con marca, sitio web, LinkedIn y correo. Guía
-    práctica con ejemplos de metales, energía y agro.
+  meta_description: "Guía práctica para que una empresa del sector industrial en México mejore su presencia ante compradores: marca, sitio web, LinkedIn y correo."
 borrador: false
 ---
 **El marketing industrial B2B es el conjunto de acciones con las que una empresa de manufactura, metales, energía o agro se vuelve visible y confiable para los negocios que le compran. Incluye marca, sitio web, LinkedIn, correo y contenido técnico. Su meta es generar solicitudes de cotización de compradores calificados.**
