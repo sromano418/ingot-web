@@ -293,18 +293,26 @@ def subpagina(t, titulo, descripcion, ruta, cuerpo, imagen="", tipo="website", e
 
 
 def fila_inicio(p, primero):
-    etiqueta = "Lo último que publicamos" if primero else esc(p["tipo"])
     resumen = f'{esc(p["resumen"])}<br>' if p["resumen"] else ""
+    nuevo = '<span class="marca-nuevo">Nuevo</span>' if primero else ""
     return (f'<a href="/blog/{p["slug"]}/">'
-            f'<div class="meta"><span class="mono">{etiqueta}</span>'
-            f'<span class="mono">{esc(p["tipo"])} · {p["fecha_txt"]}</span></div>'
+            f'<div class="meta"><span class="mono marcas"><span class="cat">{esc(p["tipo"])}</span>{nuevo}</span>'
+            f'<span class="mono fecha">{p["fecha_txt"]}</span></div>'
             f'<h3>{titulo_html(p["titulo"])}</h3>'
             f'<div class="bd">{resumen}<span class="lnk">Leer artículo →</span></div></a>')
 
 
 def portada(t, pubs, particulas):
-    filas = "".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
-    bloque = f'<section class="blog reveal" id="blog">{filas}</section>\n'
+    filas = "\n".join(fila_inicio(p, i == 0) for i, p in enumerate(pubs[:3]))
+    bloque = (
+        '<section class="blog reveal" id="blog">\n'
+        '  <div class="g">\n'
+        '    <h2 class="disp">Lo último del blog.</h2>\n'
+        '    <a class="lnk" href="/blog/">Ver todos los artículos</a>\n'
+        '  </div>\n'
+        f'  <div class="blog-lista">\n{filas}\n  </div>\n'
+        '</section>\n'
+    )
     t = cabeza(t, "InGot Marketing · Marketing para empresas del sector industrial", DESCRIPCION, "/", social=True).replace("__CONTENIDO_INICIO__", bloque)
     t = t.replace("</head>", script_ld(ld_sitio()) + "\n</head>", 1)
     # El campo de partículas solo se inyecta si la plantilla lo pide. La portada v5 usa fotografía.
