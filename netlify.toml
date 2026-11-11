@@ -8,6 +8,13 @@
   [headers.values]
     X-Robots-Tag = "noindex"
 
+# 404.html está en la raíz de publicación: Netlify lo sirve con estado 404
+# en las direcciones que no existen. noindex también en el HTML.
+[[headers]]
+  for = "/404.html"
+  [headers.values]
+    X-Robots-Tag = "noindex"
+
 # El blog se llamaba "contenido": las direcciones viejas llevan a /blog
 [[redirects]]
   from = "/contenido/*"
