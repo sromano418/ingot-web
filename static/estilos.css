@@ -594,7 +594,7 @@ footer{background:var(--negro);padding:64px 0 0}
 @media (max-width:640px){
   :root{
     --pad:20px;
-    --sec:72px;
+    --sec:32px;
     --t-hero:36px;
     --t-xl:30px;
     --t-h2:30px;
@@ -611,6 +611,10 @@ footer{background:var(--negro);padding:64px 0 0}
   .hero-pie .acc{align-items:stretch;gap:14px;margin-top:24px}
   .hero-pie .acc .cta{width:100%}
   .hero-pie .acc .lnk{align-self:center;justify-content:center;height:auto;min-height:44px;white-space:normal;text-align:center}
+
+  /* Los <br> del escritorio se sueltan: el título parte solo, sin una palabra huérfana. */
+  h1 br,h2 br{display:none}
+  .hero h1,.disp,.t1,.ind-titulo,.contacto h2{text-wrap:balance}
 
   /* Títulos de sección al mismo tamaño. El clamp del preview no usa la variable. */
   .preview .izq h2,
@@ -653,9 +657,19 @@ footer{background:var(--negro);padding:64px 0 0}
   .cuerpo h4{font-size:16px}
   .no-huerfana{white-space:normal}
 
-  /* Aire parejo entre bloques y tarjetas en una sola columna. */
-  .mercado{padding-top:48px}
-  .aqui{margin-top:48px}
+  /* Aire moderado y parejo: el hueco entre secciones es el padding de las dos, no el doble de antes. */
+  .mercado{padding-top:24px}
+  .aqui{margin-top:24px}
+  .comp{margin-top:24px}
+  .dash{margin-top:28px}
+  .pil-list{margin-top:24px}
+  .pil-top .seq{margin-top:16px}
+  .escalera{margin-top:20px}
+  .audit .dims{margin-top:20px}
+  .sec-der,.caso .der,.ba{margin-top:20px}
+  .ind-panel{margin-top:16px}
+  .con-izq,.form{margin-top:24px}
+  .preview .izq .cta{margin-top:24px}
   .cota,.nuevo{padding:20px}
   .dash-h,.hall,.dash-f{padding-left:20px;padding-right:20px}
   .dash-top{padding:22px 20px 18px}
@@ -710,18 +724,43 @@ footer{background:var(--negro);padding:64px 0 0}
     font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cobre)
   }
 
-  /* Pie compacto, centrado: logo, menú y LinkedIn. */
-  footer{padding:32px 0 0}
+  /* Pie corto: logo, menú en dos columnas y contacto. Pilares solo en escritorio. */
+  footer{padding:20px 0 0}
   .fcols{justify-items:center;text-align:center}
-  .fcols > div{line-height:1.45;font-size:15px}
-  .fc1,.fc2,.fc3,.fc4{margin-bottom:20px}
-  .fc1 img{height:38px;margin-inline:auto}
-  .fc1 div{margin-top:10px;max-width:260px;margin-inline:auto}
-  .social{justify-content:center;margin-top:14px}
-  .fcols .mono{margin-inline:auto}
-  .fc2{display:flex;flex-direction:column;align-items:center;gap:0;max-width:none;margin-inline:auto}
-  .fc2 .mono{margin-bottom:4px}
-  .fc2 a{padding:6px 8px;line-height:1.35}
-  .fc3,.fc4{max-width:280px}
-  .fbar{margin-top:4px;padding:14px 20px 18px;align-items:center;text-align:center;gap:4px}
+  .fcols > div{line-height:1.35;font-size:14px}
+  .fc1,.fc2,.fc4{margin-bottom:10px}
+  .fc1 img{height:32px;margin-inline:auto}
+  .fc1 div{margin-top:6px;max-width:240px;margin-inline:auto}
+  .social{justify-content:center;margin-top:8px}
+  .social a{width:34px;height:34px}
+  .fcols .mono{margin-inline:auto;margin-bottom:4px;padding-bottom:4px;background-position:center bottom}
+  .fc2{
+    display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:0;
+    max-width:320px;margin-inline:auto
+  }
+  .fc2 .mono{grid-column:1 / -1;justify-self:center}
+  .fc2 a{padding:4px 0;line-height:1.3}
+  .fc2 a:nth-of-type(odd){justify-self:end}
+  .fc2 a:nth-of-type(even){justify-self:start}
+  .fc3{display:none}
+  .fc4{
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;
+    column-gap:14px;row-gap:2px;max-width:340px;margin-inline:auto
+  }
+  .fc4 br{display:none}
+  .fc4 .mono{flex:0 0 100%;width:100%;max-width:none;text-align:center}
+  .fbar{margin-top:6px;padding:10px 20px 12px;align-items:center;text-align:center;gap:2px}
+
+  /* Barra inferior: aparece al pasar el hero y se esconde en el pie, sin cortar el texto. */
+  body:has(.sticky){padding-bottom:0}
+  .sticky{
+    height:auto;min-height:0;padding:7px 12px 7px 16px;
+    transform:translateY(110%);visibility:hidden;pointer-events:none
+  }
+  .sticky.is-on{transform:none;visibility:visible;pointer-events:auto}
+  .sticky span{flex:1;min-width:0;font-size:13px;line-height:1.2;white-space:normal}
+  .sticky a{height:34px;padding:0 14px;font-size:13px;flex:none}
+  @media (prefers-reduced-motion:reduce){
+    .sticky{transform:none}
+  }
 }
