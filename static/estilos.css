@@ -28,6 +28,7 @@ b,strong{font-weight:700}
 .g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);padding:0 var(--inset)}
 /* niveles */
 .disp{font-size:var(--t-h2);font-weight:800;line-height:1.04;letter-spacing:-.025em}
+.no-huerfana{white-space:nowrap}
 .mono{font-size:var(--t-lab);font-weight:700;letter-spacing:.12em;text-transform:uppercase;line-height:1.4}
 .cu{color:var(--cobre2)}
 .reg{display:none}
@@ -586,3 +587,180 @@ footer{background:var(--negro);padding:64px 0 0}
 /* Página 404. El fondo sigue siendo el blanco de body. */
 .pagina-404 p{max-width:40em;color:var(--humo);font-size:18px;line-height:1.6}
 .pagina-404 .acciones{display:flex;flex-wrap:wrap;align-items:center;gap:18px 32px;margin-top:28px}
+
+/* ============ MÓVIL: ritmo, tipo y apilado ============
+   Solo ≤640px. Escritorio y tablet no entran aquí.
+   Un tamaño de título de sección, el hero un poco mayor, dos tamaños de texto. */
+@media (max-width:640px){
+  :root{
+    --pad:20px;
+    --sec:32px;
+    --t-hero:36px;
+    --t-xl:30px;
+    --t-h2:30px;
+    --t-h3:20px;
+    --t-body:16px;
+  }
+  html{overflow-x:clip}
+  body{overflow-x:clip}
+
+  /* Hero: un botón principal a todo el ancho y el enlace secundario centrado. */
+  .hero .coord span{display:block;max-width:100%;text-wrap:balance;letter-spacing:.08em}
+  .hero-pie .sub{font-size:16px;line-height:1.55}
+  .hero-pie{margin-top:28px}
+  .hero-pie .acc{align-items:stretch;gap:14px;margin-top:24px}
+  .hero-pie .acc .cta{width:100%}
+  .hero-pie .acc .lnk{align-self:center;justify-content:center;height:auto;min-height:44px;white-space:normal;text-align:center}
+
+  /* Los <br> del escritorio se sueltan: el título parte solo, sin una palabra huérfana. */
+  h1 br,h2 br{display:none}
+  .hero h1,.disp,.t1,.ind-titulo,.contacto h2{text-wrap:balance}
+
+  /* Títulos de sección al mismo tamaño. El clamp del preview no usa la variable. */
+  .preview .izq h2,
+  .merc-foto h2,
+  .ind-titulo,
+  .contacto h2,
+  .proceso h2,
+  .audit h2,
+  .wrap h1{font-size:30px;line-height:1.12}
+  .pil .pn{font-size:30px}
+  .cota h3,.esc h3,.blog-lista h3,.post-card h3{font-size:20px;line-height:1.2}
+  .articulo h1{font-size:32px;line-height:1.12}
+  .ba .ig p,.ba .gen p{font-size:16px}
+
+  /* Dos tamaños de cuerpo: 16px el texto principal, 15px el de apoyo. */
+  .brecha .txt,
+  .preview .intro,
+  .mercado .lead,
+  .aqui p,
+  .audit .lead,
+  .audit .cierre,
+  .con-izq p,
+  .ind-panel .lead,
+  .sec-izq p,
+  .caso dd,
+  .articulo .resumen,
+  .cuerpo{font-size:16px}
+  .cota p,
+  .lado li{font-size:16px}
+  .lado li small,
+  .pil .pdesc,
+  .esc p,
+  .audit .dims p,
+  .blog-lista .bd,
+  .post-card p,
+  .raz div,
+  .art-cta p{font-size:15px}
+  .cuerpo h2{font-size:22px}
+  .cuerpo h3{font-size:18px}
+  .cuerpo h4{font-size:16px}
+  .no-huerfana{white-space:normal}
+
+  /* Aire moderado y parejo: el hueco entre secciones es el padding de las dos, no el doble de antes. */
+  .mercado{padding-top:24px}
+  .aqui{margin-top:24px}
+  .comp{margin-top:24px}
+  .dash{margin-top:28px}
+  .pil-list{margin-top:24px}
+  .pil-top .seq{margin-top:16px}
+  .escalera{margin-top:20px}
+  .audit .dims{margin-top:20px}
+  .sec-der,.caso .der,.ba{margin-top:20px}
+  .ind-panel{margin-top:16px}
+  .con-izq,.form{margin-top:24px}
+  .preview .izq .cta{margin-top:24px}
+  .cota,.nuevo{padding:20px}
+  .dash-h,.hall,.dash-f{padding-left:20px;padding-right:20px}
+  .dash-top{padding:22px 20px 18px}
+  .ind-panel{padding:24px 20px}
+  .ba > div{padding:18px 20px}
+  .form .fh{padding:14px 20px}
+  .form .fb{padding:8px 20px 22px}
+  .escalera{row-gap:0}
+  .esc{padding:4px 0 28px 16px}
+  .esc + .esc{margin-top:4px}
+  .pleg{flex-direction:column;align-items:flex-start;gap:8px}
+  .pleg span{white-space:nowrap}
+  .mc-tab div{flex-direction:column;align-items:flex-start;gap:2px}
+  .mc-tab div span:last-child{white-space:normal;text-align:left}
+  .caso .links{flex-wrap:wrap;align-items:flex-start}
+  .caso .links .cta,.caso .links .lnk{white-space:normal}
+
+  /* Blog de la portada y listado: una tarjeta por fila, texto corto. */
+  .blog-lista{margin-top:28px}
+  .blog-lista a{padding:28px var(--inset)}
+  .posts{grid-template-columns:1fr;gap:16px}
+  .post-card .txt{padding:16px 18px 18px;gap:8px}
+  .post-card p{
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:3;
+    overflow:hidden;
+  }
+  .wrap{padding:40px 20px 80px}
+  .articulo{padding:32px 20px 80px;gap:22px}
+  .art-cta{padding:20px}
+  .art-cta .btn{width:100%}
+  .pagina-404 .acciones{gap:14px 24px}
+
+  /* Tablas del artículo: filas apiladas, sin scroll horizontal. */
+  .cuerpo{position:relative;overflow-wrap:break-word}
+  .cuerpo table,.cuerpo thead,.cuerpo tbody,.cuerpo tr{display:block;width:100%;max-width:100%}
+  .cuerpo table{overflow:visible;font-size:15px}
+  .cuerpo thead{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+    clip:rect(0,0,0,0);white-space:nowrap;border:0
+  }
+  .cuerpo tr{
+    border:1px solid var(--acero2);border-radius:var(--r);padding:4px 16px 8px;margin-top:12px;background:#fff
+  }
+  .cuerpo td{
+    display:block;width:auto;border:0;padding:10px 0;white-space:normal
+  }
+  .cuerpo td + td{border-top:1px solid var(--acero2)}
+  .cuerpo td[data-label]::before{
+    content:attr(data-label);display:block;margin-bottom:2px;
+    font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cobre)
+  }
+
+  /* Pie corto: logo, menú en dos columnas y contacto. Pilares solo en escritorio. */
+  footer{padding:20px 0 0}
+  .fcols{justify-items:center;text-align:center}
+  .fcols > div{line-height:1.35;font-size:14px}
+  .fc1,.fc2,.fc4{margin-bottom:10px}
+  .fc1 img{height:32px;margin-inline:auto}
+  .fc1 div{margin-top:6px;max-width:240px;margin-inline:auto}
+  .social{justify-content:center;margin-top:8px}
+  .social a{width:34px;height:34px}
+  .fcols .mono{margin-inline:auto;margin-bottom:4px;padding-bottom:4px;background-position:center bottom}
+  .fc2{
+    display:grid;grid-template-columns:1fr 1fr;column-gap:16px;row-gap:0;
+    max-width:320px;margin-inline:auto
+  }
+  .fc2 .mono{grid-column:1 / -1;justify-self:center}
+  .fc2 a{padding:4px 0;line-height:1.3}
+  .fc2 a:nth-of-type(odd){justify-self:end}
+  .fc2 a:nth-of-type(even){justify-self:start}
+  .fc3{display:none}
+  .fc4{
+    display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;
+    column-gap:14px;row-gap:2px;max-width:340px;margin-inline:auto
+  }
+  .fc4 br{display:none}
+  .fc4 .mono{flex:0 0 100%;width:100%;max-width:none;text-align:center}
+  .fbar{margin-top:6px;padding:10px 20px 12px;align-items:center;text-align:center;gap:2px}
+
+  /* Barra inferior: aparece al pasar el hero y se esconde en el pie, sin cortar el texto. */
+  body:has(.sticky){padding-bottom:0}
+  .sticky{
+    height:auto;min-height:0;padding:7px 12px 7px 16px;
+    transform:translateY(110%);visibility:hidden;pointer-events:none
+  }
+  .sticky.is-on{transform:none;visibility:visible;pointer-events:auto}
+  .sticky span{flex:1;min-width:0;font-size:13px;line-height:1.2;white-space:normal}
+  .sticky a{height:34px;padding:0 14px;font-size:13px;flex:none}
+  @media (prefers-reduced-motion:reduce){
+    .sticky{transform:none}
+  }
+}

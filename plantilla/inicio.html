@@ -43,7 +43,7 @@ __META_EXTRA__
   <div class="hero-body">
     <div class="g">
       <div class="coord mono"><span>Marketing para empresas del sector industrial</span></div>
-      <h1>Hacemos <em>visible</em><br>el valor de<br>tu empresa.</h1>
+      <h1>Hacemos <em>visible</em><br> el valor de<br> tu empresa.</h1>
     </div>
   </div>
   <div class="hero-pie">
@@ -97,7 +97,7 @@ __META_EXTRA__
 <section class="preview reveal" id="preview">
   <div class="g">
     <div class="izq">
-      <h2 class="disp">Primero te mostramos<br><span class="cu">qué vemos.</span></h2>
+      <h2 class="disp">Primero te mostramos<br> <span class="cu">qué vemos.</span></h2>
       <p class="intro">Antes de hablar de un proyecto, revisamos cómo te ve hoy un comprador. Si vemos una oportunidad clara de mejora, te preparamos sin costo un documento corto con lo que encontramos.</p>
       <ol class="recibe">
         <li>Cómo te ve hoy un comprador.</li>
@@ -140,7 +140,7 @@ __META_EXTRA__
 
 <section class="pilares reveal" id="que-hacemos">
   <div class="g pil-top">
-    <h2 class="disp">Cuatro pilares,<br>una secuencia.</h2>
+    <h2 class="disp">Cuatro pilares,<br> una secuencia.</h2>
     <div class="seq"><span class="seq-en">Look&nbsp;right · Be&nbsp;found · Be&nbsp;trusted · Be&nbsp;chosen</span><span>Cada pilar se apoya en el anterior.</span></div>
   </div>
   <div class="pil-list">
@@ -226,7 +226,7 @@ __META_EXTRA__
 
 <section class="proceso reveal" id="como-trabajamos">
   <div class="g">
-    <h2 class="disp">Un proceso que empieza por<br><span class="cu">entender tu empresa.</span></h2>
+    <h2 class="disp">Un proceso que empieza por<br> <span class="cu">entender tu empresa.</span></h2>
     <div class="escalera">
       <div class="esc"><div class="num">01</div><h3>Preview</h3><span class="mono">Conocernos</span><p>Revisamos tu presencia y, si vemos una oportunidad clara de mejora, te mostramos sin costo lo que encontramos.</p><div class="barra" aria-hidden="true"></div></div>
       <div class="esc"><div class="num">02</div><h3>Auditoría</h3><span class="mono">Definir</span><p>Revisamos 21 puntos de tu presencia digital, agrupados en 6 dimensiones, y te comparamos con 2 de tus competidores.</p><div class="barra" aria-hidden="true"></div></div>
@@ -350,6 +350,27 @@ __CONTENIDO_INICIO__
 </footer>
 
 <div class="sticky"><span>Preview sin costo<br>de tu presencia</span><a href="#contacto">Pídelo →</a></div>
+<script>
+(function () {
+  var bar = document.querySelector('.sticky');
+  var hero = document.querySelector('.hero');
+  var foot = document.querySelector('footer');
+  if (!bar || !hero || !window.IntersectionObserver) return;
+  var state = {hero: true, foot: false};
+  function paint() { bar.classList.toggle('is-on', !state.hero && !state.foot); }
+  new IntersectionObserver(function (es) {
+    es.forEach(function (en) { state.hero = en.isIntersecting; });
+    paint();
+  }, {threshold: 0}).observe(hero);
+  if (foot) {
+    new IntersectionObserver(function (es) {
+      es.forEach(function (en) { state.foot = en.isIntersecting; });
+      paint();
+    }, {threshold: 0}).observe(foot);
+  }
+  paint();
+})();
+</script>
 
 <script>
 document.getElementById('lead').addEventListener('submit', function (e) {
