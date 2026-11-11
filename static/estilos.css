@@ -582,3 +582,7 @@ footer{background:var(--negro);padding:64px 0 0}
   .art-aside{position:static}
   .indice{display:none}
 }
+
+/* Página 404. El fondo sigue siendo el blanco de body. */
+.pagina-404 p{max-width:40em;color:var(--humo);font-size:18px;line-height:1.6}
+.pagina-404 .acciones{display:flex;flex-wrap:wrap;align-items:center;gap:18px 32px;margin-top:28px}

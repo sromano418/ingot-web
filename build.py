@@ -3,7 +3,8 @@
 - Portada: plantilla/inicio.html (+ efecto de partículas + últimas publicaciones).
 - Contenido: una página con todas las publicaciones y una página por publicación,
   a partir de los archivos Markdown de contenido/ (los escribe el panel /admin).
-- sitemap.xml y robots.txt para Google.
+- sitemap.xml, robots.txt y llms.txt.
+- 404.html para direcciones que no existen (noindex y fuera del sitemap).
 
 Netlify lo corre en cada cambio (ver netlify.toml). En local:
     python build.py                 # genera _site/
@@ -152,8 +153,7 @@ def plantilla():
     t = (RAIZ / "plantilla" / "inicio.html").read_text(encoding="utf-8")
     ver_caso = (f'<a class="cta blanco" href="{VER_CASO_URL}">Ver el caso <span class="flecha" aria-hidden="true">→</span></a>'
                 if VER_CASO_URL else "")
-    t = (t.replace("__FAVICON__", "/assets/favicon.png")
-          .replace("__LOGO__", "/assets/marca/ingot-02.svg")
+    t = (t.replace("__LOGO__", "/assets/marca/ingot-02.svg")
           .replace("__VER_CASO__", ver_caso)
           .replace("__CASO_IMG__", CASO_IMAGEN)
           .replace("__LINKEDIN__", SOCIAL_HTML)
@@ -161,9 +161,128 @@ def plantilla():
     return t
 
 
+DESC_BLOG = (
+    "Artículos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial "
+    "en México: marca, sitio web, LinkedIn y contenido técnico."
+)
+
+
 def script_ld(datos):
     crudo = json.dumps(datos, ensure_ascii=False).replace("</", "<\\/")
     return f'<script type="application/ld+json">{crudo}</script>'
+
+
+def url_imagen(imagen):
+    if not imagen:
+        return ""
+    return imagen if str(imagen).startswith("http") else DOMINIO + imagen
+
+
+def ld_migas(pasos):
+    """pasos: lista de (nombre, url absoluta)."""
+    return {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": i, "name": nombre, "item": url}
+            for i, (nombre, url) in enumerate(pasos, 1)
+        ],
+    }
+
+
+def ld_blog(pubs):
+    """CollectionPage + Blog, ItemList de lo publicado y migas Inicio > Blog."""
+    elementos = []
+    for i, p in enumerate(pubs, 1):
+        url = f"{DOMINIO}/blog/{p['slug']}/"
+        posting = {
+            "@type": "BlogPosting",
+            "headline": p["titulo"],
+            "url": url,
+            "datePublished": p["fecha"].date().isoformat(),
+            "inLanguage": "es-MX",
+        }
+        img = url_imagen(p["imagen"])
+        if img:
+            posting["image"] = img
+        elementos.append({
+            "@type": "ListItem",
+            "position": i,
+            "name": p["titulo"],
+            "url": url,
+            "item": posting,
+        })
+    lista = DOMINIO + "/blog/#list"
+    migas = DOMINIO + "/blog/#breadcrumb"
+    return {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": ["CollectionPage", "Blog"],
+                "@id": DOMINIO + "/blog/#webpage",
+                "url": DOMINIO + "/blog/",
+                "name": "Blog de marketing para el sector industrial",
+                "description": DESC_BLOG,
+                "inLanguage": "es-MX",
+                "isPartOf": {"@id": DOMINIO + "/#website"},
+                "publisher": {"@id": DOMINIO + "/#organization"},
+                "mainEntity": {"@id": lista},
+                "breadcrumb": {"@id": migas},
+            },
+            {
+                "@type": "ItemList",
+                "@id": lista,
+                "name": "Artículos publicados",
+                "numberOfItems": len(elementos),
+                "itemListOrder": "https://schema.org/ItemListOrderDescending",
+                "itemListElement": elementos,
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": migas,
+                "itemListElement": ld_migas([
+                    ("Inicio", DOMINIO + "/"),
+                    ("Blog", DOMINIO + "/blog/"),
+                ])["itemListElement"],
+            },
+        ],
+    }
+
+
+def texto_llms(pubs):
+    """Descripción para asistentes. Solo enlaza artículos ya publicados."""
+    lineas = [
+        "# InGot",
+        "",
+        "> Marketing para empresas del sector industrial. Hacemos visible el valor de tu empresa.",
+        "",
+        "InGot ayuda a empresas del sector industrial a construir una presencia profesional, "
+        "aumentar su visibilidad y comunicar con claridad lo que las hace valiosas. "
+        "El trabajo cubre México, Estados Unidos y Latinoamérica, y sigue cuatro pilares en este orden:",
+        "",
+        "- **Te ves profesional.** Identidad, sitio web, LinkedIn y presentaciones a la altura de la planta.",
+        "- **Te encuentran.** SEO, contenido y páginas por producto para que un comprador te encuentre en Google o en asistentes de IA.",
+        "- **Confían en ti.** Artículos técnicos, reportes y estudios que demuestran conocimiento del mercado.",
+        "- **Te eligen.** Fichas técnicas y materiales comerciales para que el equipo cierre.",
+        "",
+        "El proceso empieza con un preview de la presencia actual. Si hay una oportunidad clara, "
+        "sigue una auditoría y después la construcción del sitio, la marca y el contenido, con acompañamiento mensual.",
+        "",
+        "## Contacto",
+        "",
+        f"- [Contacto]({DOMINIO}/#contacto)",
+        "",
+        "## Artículos",
+        "",
+    ]
+    if pubs:
+        for p in pubs:
+            resumen = f": {p['resumen']}" if p["resumen"] else ""
+            lineas.append(f"- [{p['titulo']}]({DOMINIO}/blog/{p['slug']}/){resumen}")
+    else:
+        lineas.append("Todavía no hay artículos publicados.")
+    lineas.append("")
+    return "\n".join(lineas)
 
 
 def _git(args):
@@ -239,6 +358,11 @@ def ld_sitio():
                 "logo": DOMINIO + "/assets/logo-oscuro.png",
                 "email": "info@ingot.mx",
                 "telephone": "+528127186576",
+                "areaServed": [
+                    {"@type": "Country", "name": "México"},
+                    {"@type": "Country", "name": "Estados Unidos"},
+                    {"@type": "Place", "name": "Latinoamérica"},
+                ],
                 "sameAs": [linkedin],
             },
             {
@@ -338,9 +462,10 @@ def pagina_lista(t, pubs):
     return subpagina(
         t,
         "Blog de marketing para el sector industrial · InGot",
-        "Artículos de InGot sobre presencia, visibilidad y mercados para empresas del sector industrial en México: marca, sitio web, LinkedIn y contenido técnico.",
+        DESC_BLOG,
         "/blog/",
         cuerpo,
+        extra="\n" + script_ld(ld_blog(pubs)),
         social=True,
     )
 
@@ -388,7 +513,8 @@ def pagina_publicacion(t, p):
     if p["keyword"]:
         ld["keywords"] = p["keyword"]
     extra = (f'\n<meta property="article:published_time" content="{p["fecha"].date().isoformat()}">'
-             f'\n{script_ld(ld)}')
+             f'\n{script_ld(ld)}'
+             f'\n{script_ld(ld_migas([("Inicio", DOMINIO + "/"), ("Blog", DOMINIO + "/blog/"), (p["titulo"], DOMINIO + ruta)]))}')
     faqs = preguntas_visibles(p["html"])
     if faqs:
         extra += "\n" + script_ld({
@@ -401,6 +527,33 @@ def pagina_publicacion(t, p):
             ],
         })
     return subpagina(t, p["meta_title"], p["meta_description"], ruta, cuerpo, p["imagen"], "article", extra)
+
+
+def pagina_404(t):
+    cuerpo = (
+        '<section class="pagina-404">\n'
+        '  <div class="wrap">\n'
+        '    <div class="head">\n'
+        '      <div class="eyebrow">404</div>\n'
+        '      <h1>No encontramos esta página.</h1>\n'
+        '    </div>\n'
+        '    <p>La dirección no existe o cambió. Puedes volver al inicio, leer el blog o escribirnos.</p>\n'
+        '    <div class="acciones">\n'
+        '      <a class="lnk" href="/">Inicio</a>\n'
+        '      <a class="lnk" href="/blog/">Blog</a>\n'
+        '      <a class="lnk" href="/#contacto">Contacto</a>\n'
+        '    </div>\n'
+        '  </div>\n'
+        '</section>'
+    )
+    return subpagina(
+        t,
+        "Página no encontrada · InGot",
+        "Esta página no existe. Vuelve al inicio, al blog o al contacto de InGot.",
+        "/404.html",
+        cuerpo,
+        extra='\n<meta name="robots" content="noindex">',
+    )
 
 
 def main():
@@ -420,14 +573,23 @@ def main():
 
     escribir("index.html", portada(t, pubs, particulas))
     escribir("blog/index.html", pagina_lista(t, pubs))
+    escribir("404.html", pagina_404(t))
     for p in pubs:
         escribir(f"blog/{p['slug']}/index.html", pagina_publicacion(t, p))
 
     hoy = dt.date.today().isoformat()
+    # Solo páginas públicas. 404.html lleva noindex y no entra aquí. Los borradores
+    # tampoco: leer_publicaciones ya los dejó fuera, y llms.txt usa la misma lista.
     urls = [("/", hoy), ("/blog/", hoy)] + [(f"/blog/{p['slug']}/", p["fecha"].date().isoformat()) for p in pubs]
-    escribir("sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-             + "".join(f"  <url><loc>{DOMINIO}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls) + "</urlset>\n")
-    escribir("robots.txt", f"User-agent: *\nDisallow: /admin/\nSitemap: {DOMINIO}/sitemap.xml\n")
+    mapa = ('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+            + "".join(f"  <url><loc>{DOMINIO}{u}</loc><lastmod>{d}</lastmod></url>\n" for u, d in urls) + "</urlset>\n")
+    assert f"{DOMINIO}/404" not in mapa
+    escribir("sitemap.xml", mapa)
+    # /llms.txt se puede rastrear: no está bajo /admin/.
+    robots = f"User-agent: *\nDisallow: /admin/\nSitemap: {DOMINIO}/sitemap.xml\n"
+    assert "llms.txt" not in robots
+    escribir("robots.txt", robots)
+    escribir("llms.txt", texto_llms(pubs))
     html_portada = (SALIDA / "index.html").read_text(encoding="utf-8")
     sobrantes = re.findall(r"__[A-Z_]+__", html_portada)
     assert not sobrantes, sobrantes
