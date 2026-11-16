@@ -56,11 +56,19 @@ esc = html.escape
 
 
 def unir_ultimas(texto):
-    """Evita una palabra sola al final si el navegador no tiene text-wrap: balance."""
+    """Evita una palabra sola al final si el navegador no tiene text-wrap: balance.
+
+    En escritorio las dos últimas palabras van juntas. En móvil el CSS deja que
+    se separen si no caben en la línea.
+    """
     partes = texto.rsplit(" ", 1)
-    if len(partes) == 2 and partes[0].strip() and partes[1].strip():
-        return partes[0] + "&nbsp;" + partes[1]
-    return texto
+    if len(partes) != 2 or not partes[0].strip() or not partes[1].strip():
+        return texto
+    cabeza, ultima = partes
+    previas = cabeza.rsplit(" ", 1)
+    if len(previas) == 2:
+        return f'{previas[0]} <span class="no-huerfana">{previas[1]} {ultima}</span>'
+    return f'<span class="no-huerfana">{cabeza} {ultima}</span>'
 
 
 def titulo_html(texto):
@@ -75,6 +83,30 @@ def equilibrar_encabezados(fragmento):
         return f"<{tag}{attrs}>{unir_ultimas(inner)}</{tag}>"
 
     return re.sub(r"<(h[123])(\s[^>]*)?>(.*?)</\1>", repl, fragmento, flags=re.I | re.S)
+
+
+def etiquetar_tablas(fragmento):
+    """En móvil cada celda muestra el nombre de su columna (data-label). El texto no cambia."""
+    def tabla(m):
+        bloque = m.group(0)
+        heads = re.findall(r"<th\b[^>]*>(.*?)</th>", bloque, flags=re.I | re.S)
+        labels = [re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", h)).strip() for h in heads]
+        if not labels:
+            return bloque
+        n = {"i": 0}
+
+        def td(tm):
+            i = n["i"]
+            n["i"] += 1
+            attrs, inner = tm.group(1) or "", tm.group(2)
+            if "data-label=" in attrs:
+                return tm.group(0)
+            lab = esc(labels[i % len(labels)])
+            return f'<td data-label="{lab}"{attrs}>{inner}</td>'
+
+        return re.sub(r"<td(\s[^>]*)?>(.*?)</td>", td, bloque, flags=re.I | re.S)
+
+    return re.sub(r"<table\b[^>]*>.*?</table>", tabla, fragmento, flags=re.I | re.S)
 
 
 # ── publicaciones ─────────────────────────────────────────────────────────────
@@ -493,7 +525,7 @@ def pagina_publicacion(t, p):
               + '  </header>\n'
               f'  {medio}\n'
               '  <div class="art-grid">\n'
-              f'    <div class="cuerpo">{equilibrar_encabezados(p["html"])}</div>\n'
+              f'    <div class="cuerpo">{equilibrar_encabezados(etiquetar_tablas(p["html"]))}</div>\n'
               '    <aside class="art-aside">' + indice
               + '<div class="art-cta"><strong>¿Tu presencia refleja el valor de tu empresa?</strong>'
               '<p>Te mostramos qué vemos antes de trabajar juntos.</p>'
