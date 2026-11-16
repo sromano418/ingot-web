@@ -435,7 +435,8 @@ footer{background:var(--negro);padding:64px 0 0}
   body:has(.hero) .hero{padding-top:68px}
   .nav .navcta .cta{font-size:12.5px;padding:5px 5px 5px 16px;min-height:40px}.nav .navcta .cta .flecha{width:30px;height:30px}
   .hero{min-height:0}
-  .hero-img::after{background:linear-gradient(180deg,rgba(34,34,34,.4) 0%,rgba(34,34,34,.6) 40%,rgba(34,34,34,.95) 72%)}
+  .hero-img img{filter:grayscale(1) contrast(1.05) brightness(.6)}
+  .hero-img::after{background:linear-gradient(180deg,rgba(34,34,34,.88) 0%,rgba(34,34,34,.92) 48%,rgba(34,34,34,.95) 78%)}
   .hero-body{padding-top:64px}
   .hero .ref{top:78px;right:20px;font-size:9.5px}
   .hero .coord{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:20px}
