@@ -463,6 +463,7 @@ def portada(t, pubs, particulas):
     bloque = (
         '<section class="blog reveal" id="blog">\n'
         '  <div class="g">\n'
+        '    <p class="hilo">Del blog</p>\n'
         '    <h2 class="disp">Lo último del blog.</h2>\n'
         '    <a class="lnk" href="/blog/">Ver todos los artículos</a>\n'
         '  </div>\n'
